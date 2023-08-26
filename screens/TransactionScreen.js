@@ -1,16 +1,16 @@
-import { View, Text } from "react-native";
+import { View, Text, Button } from "react-native";
 import { mainStyle } from "../mainStyle";
 
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-
 import CalendarTab from "./transactionsTabs/CalendarTab";
 import DayTab from "./transactionsTabs/DayTab";
 import MonthTab from "./transactionsTabs/MonthTab";
 import YearTab from "./transactionsTabs/YearTab";
+import { allColors } from "../Colors";
 
 const TopTab = createMaterialTopTabNavigator();
 
-const TransactionScreen = () => {
+const TransactionScreen = ({ navigation }) => {
   return (
     <View style={mainStyle.fullArea}>
       <View style={mainStyle.header}>
@@ -48,6 +48,14 @@ const TransactionScreen = () => {
             options={{ title: "Year" }}
           />
         </TopTab.Navigator>
+      </View>
+
+      <View style={{ margin: 12 }}>
+        <Button
+          title="Add"
+          color={allColors.tabActive}
+          onPress={() => navigation.navigate("AddIncomeExpenses")}
+        />
       </View>
     </View>
   );

@@ -1,8 +1,7 @@
-import { useCallback } from "react";
-
 import { View, Text, StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
+import "react-native-gesture-handler";
 
 import TransactionScreen from "./screens/TransactionScreen";
 import SummaryScreen from "./screens/SummaryScreen";
@@ -13,6 +12,7 @@ import { allColors } from "./Colors";
 
 import AppLoading from "expo-app-loading";
 import { useFonts } from "expo-font";
+import MainTransactionScreen from "./screens/MainTransactionScreen";
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -37,7 +37,8 @@ const App = () => {
         >
           <Tab.Screen
             name="TransactionScreen"
-            component={TransactionScreen}
+            // component={TransactionScreen}
+            component={MainTransactionScreen}
             options={{
               title: "Transactions",
               tabBarIcon: ({ color, size }) => (

@@ -1,0 +1,1 @@
+Money Manager - A React Native App by Nabin

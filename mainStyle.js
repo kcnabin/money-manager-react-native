@@ -14,7 +14,13 @@ export const mainStyle = StyleSheet.create({
     backgroundColor: allColors.topTabBackground,
   },
   headerText: {
-    fontWeight: "bold",
     fontSize: 16,
+    fontFamily: "main-bold",
+  },
+  mainFont: {
+    fontFamily: "main",
+  },
+  mainFontBold: {
+    fontFamily: "main-bold",
   },
 });

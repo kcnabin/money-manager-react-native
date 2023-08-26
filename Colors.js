@@ -4,4 +4,6 @@ export const allColors = {
   tabBackground: "#e9e9e9",
 
   topTabBackground: "#eaeaeabd",
+
+  whiteSmoke: "#f5f5f5",
 };

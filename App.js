@@ -1,3 +1,5 @@
+import { useCallback } from "react";
+
 import { View, Text, StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
@@ -9,9 +11,22 @@ import MoreScreen from "./screens/MoreScreen";
 import { MaterialIcons } from "@expo/vector-icons";
 import { allColors } from "./Colors";
 
+import AppLoading from "expo-app-loading";
+import { useFonts } from "expo-font";
+
 const Tab = createMaterialBottomTabNavigator();
 
 const App = () => {
+  const [fontsLoaded] = useFonts({
+    witcher: require("./assets/fonts/Witcher.ttf"),
+    main: require("./assets/fonts/OpenSans.ttf"),
+    "main-bold": require("./assets/fonts/OpenSansBold.ttf"),
+  });
+
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  }
+
   return (
     <View style={style.appContainer}>
       <NavigationContainer>

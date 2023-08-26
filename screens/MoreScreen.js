@@ -4,7 +4,7 @@ import { mainStyle } from "../mainStyle";
 const MoreScreen = () => {
   return (
     <View style={mainStyle.fullArea}>
-      <Text style={mainStyle.bigFont}>MoreScreen</Text>
+      <Text style={[mainStyle.bigFont, mainStyle.headerText]}>MoreScreen</Text>
     </View>
   );
 };

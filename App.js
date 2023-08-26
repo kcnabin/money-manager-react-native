@@ -1,9 +1,8 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet, SafeAreaView } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import "react-native-gesture-handler";
 
-import TransactionScreen from "./screens/TransactionScreen";
 import SummaryScreen from "./screens/SummaryScreen";
 import MoreScreen from "./screens/MoreScreen";
 
@@ -28,7 +27,7 @@ const App = () => {
   }
 
   return (
-    <View style={style.appContainer}>
+    <SafeAreaView style={style.appContainer}>
       <NavigationContainer>
         <Tab.Navigator
           activeColor={allColors.tabActive}
@@ -73,7 +72,7 @@ const App = () => {
           />
         </Tab.Navigator>
       </NavigationContainer>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -82,7 +81,7 @@ export default App;
 const style = StyleSheet.create({
   appContainer: {
     flex: 1,
-    paddingTop: 40,
+    paddingTop: 50,
   },
   appText: {
     fontSize: 24,

@@ -23,4 +23,36 @@ export const mainStyle = StyleSheet.create({
   mainFontBold: {
     fontFamily: "main-bold",
   },
+  input: {
+    borderBottomWidth: 1,
+    borderBottomColor: allColors.gray,
+    paddingBottom: 4,
+    marginLeft: 16,
+    fontFamily: "main",
+    fontSize: 16,
+    flex: 1,
+  },
+  inputText: {
+    fontFamily: "main",
+    fontSize: 16,
+    width: 70,
+    // borderWidth: 1,
+    // borderColor: "black",
+  },
+  font16: {
+    fontFamily: "main",
+    fontSize: 16,
+  },
+  font20: {
+    fontFamily: "main",
+    fontSize: 20,
+  },
+  flexRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    // borderWidth: 1,
+    // borderColor: "black",
+    paddingVertical: 12,
+    columnGap: 12,
+  },
 });

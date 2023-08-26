@@ -6,4 +6,5 @@ export const allColors = {
   topTabBackground: "#eaeaeabd",
 
   whiteSmoke: "#f5f5f5",
+  gray: "#807b6b87",
 };

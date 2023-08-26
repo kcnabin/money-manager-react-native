@@ -20,6 +20,7 @@ const MainTransactionScreen = () => {
         <Stack.Screen
           name="AddIncomeExpenses"
           component={AddIncomeExpensesScreen}
+          options={{}}
         />
       </Stack.Navigator>
     </View>

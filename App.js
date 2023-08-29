@@ -2,6 +2,7 @@ import { View, StyleSheet, SafeAreaView } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import "react-native-gesture-handler";
+import { Provider } from "react-redux";
 
 import SummaryScreen from "./screens/SummaryScreen";
 import MoreScreen from "./screens/MoreScreen";
@@ -12,6 +13,7 @@ import { allColors } from "./Colors";
 import AppLoading from "expo-app-loading";
 import { useFonts } from "expo-font";
 import MainTransactionScreen from "./screens/MainTransactionScreen";
+import { store } from "./app/store";
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -27,52 +29,54 @@ const App = () => {
   }
 
   return (
-    <SafeAreaView style={style.appContainer}>
-      <NavigationContainer>
-        <Tab.Navigator
-          activeColor={allColors.tabActive}
-          inactiveColor={allColors.tabInactive}
-          barStyle={{ backgroundColor: allColors.tabBackground }}
-        >
-          <Tab.Screen
-            name="TransactionScreen"
-            // component={TransactionScreen}
-            component={MainTransactionScreen}
-            options={{
-              title: "Transactions",
-              tabBarIcon: ({ color, size }) => (
-                <MaterialIcons name="grid-view" size={28} color={color} />
-              ),
-            }}
-          />
-          <Tab.Screen
-            name="SummaryScreen"
-            component={SummaryScreen}
-            options={{
-              title: "Summary",
-              tabBarIcon: ({ color }) => (
-                <MaterialIcons
-                  name="account-balance-wallet"
-                  size={24}
-                  color={color}
-                />
-              ),
-            }}
-          />
+    <Provider store={store}>
+      <SafeAreaView style={style.appContainer}>
+        <NavigationContainer>
+          <Tab.Navigator
+            activeColor={allColors.tabActive}
+            inactiveColor={allColors.tabInactive}
+            barStyle={{ backgroundColor: allColors.tabBackground }}
+          >
+            <Tab.Screen
+              name="TransactionScreen"
+              // component={TransactionScreen}
+              component={MainTransactionScreen}
+              options={{
+                title: "Transactions",
+                tabBarIcon: ({ color, size }) => (
+                  <MaterialIcons name="grid-view" size={28} color={color} />
+                ),
+              }}
+            />
+            <Tab.Screen
+              name="SummaryScreen"
+              component={SummaryScreen}
+              options={{
+                title: "Summary",
+                tabBarIcon: ({ color }) => (
+                  <MaterialIcons
+                    name="account-balance-wallet"
+                    size={24}
+                    color={color}
+                  />
+                ),
+              }}
+            />
 
-          <Tab.Screen
-            name="MoreScren"
-            component={MoreScreen}
-            options={{
-              title: "More",
-              tabBarIcon: ({ color }) => (
-                <MaterialIcons name="settings" size={24} color={color} />
-              ),
-            }}
-          />
-        </Tab.Navigator>
-      </NavigationContainer>
-    </SafeAreaView>
+            <Tab.Screen
+              name="MoreScren"
+              component={MoreScreen}
+              options={{
+                title: "More",
+                tabBarIcon: ({ color }) => (
+                  <MaterialIcons name="settings" size={24} color={color} />
+                ),
+              }}
+            />
+          </Tab.Navigator>
+        </NavigationContainer>
+      </SafeAreaView>
+    </Provider>
   );
 };
 

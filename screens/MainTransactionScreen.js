@@ -3,10 +3,14 @@ import { mainStyle } from "../mainStyle";
 import { createStackNavigator } from "@react-navigation/stack";
 import TransactionScreen from "./TransactionScreen";
 import AddIncomeExpensesScreen from "./incomeExpenses/AddIncomeExpensesScreen";
+import { useSelector } from "react-redux";
 
 const Stack = createStackNavigator();
 
 const MainTransactionScreen = () => {
+  // const storeItems = useSelector((state) => state.expenses);
+  // console.log("storeItems :", storeItems);
+
   return (
     <View style={mainStyle.fullArea}>
       <Stack.Navigator>

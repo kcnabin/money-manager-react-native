@@ -1,4 +1,9 @@
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigation } from "@react-navigation/native";
+import { addIncome } from "../../features/income/incomeSlice";
+import { addExpenses } from "../../features/expenses/expensesSlice";
+
 import {
   View,
   Text,
@@ -7,18 +12,20 @@ import {
   Button,
   Pressable,
   Alert,
+  ScrollView,
 } from "react-native";
+
 import { mainStyle } from "../../mainStyle";
-import { useNavigation } from "@react-navigation/native";
+
 import DateTimePicker from "@react-native-community/datetimepicker";
 import Pill from "../components/Pill";
-import { ScrollView } from "react-native-gesture-handler";
 import OptionSelector from "./OptionSelector";
 import DateAndTimePicker from "./components/DateAndTimePicker";
 import AccountPicker from "./components/AccountPicker";
 
 const AddIncomeExpensesScreen = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   const [date, setDate] = useState(new Date());
   const [account, setAccount] = useState("");
@@ -47,13 +54,19 @@ const AddIncomeExpensesScreen = () => {
 
   const handleTransactionSave = () => {
     const transactionObject = {
-      date,
+      date: date.toString(),
       account,
       category,
       amount,
       note,
     };
-    console.log(transactionObject);
+
+    if (transactionType === "income") {
+      dispatch(addIncome(transactionObject));
+    } else if (transactionType === "expenses") {
+      dispatch(addExpenses(transactionObject));
+    }
+
     navigation.navigate("AllTransactions");
   };
 

@@ -1,19 +1,20 @@
-import { View, StyleSheet, SafeAreaView } from "react-native";
+import { StyleSheet, SafeAreaView } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
+
+import { Provider } from "react-redux";
+import { store } from "./app/store";
+
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import "react-native-gesture-handler";
-import { Provider } from "react-redux";
 
 import SummaryScreen from "./screens/SummaryScreen";
 import MoreScreen from "./screens/MoreScreen";
-
-import { MaterialIcons } from "@expo/vector-icons";
-import { allColors } from "./Colors";
+import MainTransactionScreen from "./screens/MainTransactionScreen";
 
 import AppLoading from "expo-app-loading";
+import { MaterialIcons } from "@expo/vector-icons";
+import { allColors } from "./Colors";
 import { useFonts } from "expo-font";
-import MainTransactionScreen from "./screens/MainTransactionScreen";
-import { store } from "./app/store";
 
 const Tab = createMaterialBottomTabNavigator();
 

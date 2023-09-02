@@ -11,17 +11,15 @@ import {
   StyleSheet,
   Button,
   Pressable,
-  Alert,
-  ScrollView,
 } from "react-native";
 
-import { mainStyle } from "../../mainStyle";
-
 import DateTimePicker from "@react-native-community/datetimepicker";
-import Pill from "../components/Pill";
 import OptionSelector from "./OptionSelector";
 import DateAndTimePicker from "./components/DateAndTimePicker";
 import AccountPicker from "./components/AccountPicker";
+
+import { mainStyle } from "../../mainStyle";
+import { allColors } from "../../Colors";
 
 const AddIncomeExpensesScreen = () => {
   const navigation = useNavigation();
@@ -39,13 +37,6 @@ const AddIncomeExpensesScreen = () => {
   const [accountOrCategory, setAccountOrCategory] = useState(null);
   const [transactionType, setTransactionType] = useState("expenses");
 
-  const data = {
-    account,
-    category,
-    accountOrCategory,
-    transactionType,
-  };
-
   useEffect(() => {
     navigation.setOptions({
       title: transactionType.toUpperCase(),
@@ -54,9 +45,10 @@ const AddIncomeExpensesScreen = () => {
 
   const handleTransactionSave = () => {
     const transactionObject = {
+      type: transactionType,
+      account: account.id,
+      category: category.id,
       date: date.toString(),
-      account,
-      category,
       amount,
       note,
     };
@@ -102,16 +94,58 @@ const AddIncomeExpensesScreen = () => {
     setDate(currentDate);
   };
 
+  const getTransactionCategoryStyle = (type) => {
+    let style;
+    let defaultStyle = {
+      borderWidth: 1,
+      borderColor: "black",
+      flex: 1,
+      paddingVertical: 8,
+      paddingHorizontal: 12,
+      borderRadius: 12,
+    };
+
+    if (type == transactionType) {
+      style = { ...defaultStyle, backgroundColor: allColors.pillBg };
+    } else {
+      style = defaultStyle;
+    }
+    return style;
+  };
+
+  const getTransactionTextStyle = (type) => {
+    let style;
+    const defaultStyle = {
+      textAlign: "center",
+      fontSize: 16,
+      fontFamily: "main",
+    };
+
+    if (transactionType === type) {
+      style = { ...defaultStyle, color: "white", fontFamily: "main-bold" };
+    } else {
+      style = defaultStyle;
+    }
+
+    return style;
+  };
+
   return (
-    <View style={style.container}>
-      <ScrollView>
+    <View style={[style.container]}>
+      <View>
         <View style={mainStyle.flexRow}>
-          <Pressable style={{ flex: 1 }} onPress={setToIncome}>
-            <Pill text="Income" />
+          <Pressable
+            style={getTransactionCategoryStyle("income")}
+            onPress={setToIncome}
+          >
+            <Text style={getTransactionTextStyle("income")}>Income</Text>
           </Pressable>
 
-          <Pressable style={{ flex: 1 }} onPress={setToExpenses}>
-            <Pill text="Expenses" />
+          <Pressable
+            style={getTransactionCategoryStyle("expenses")}
+            onPress={setToExpenses}
+          >
+            <Text style={getTransactionTextStyle("expenses")}>Expenses</Text>
           </Pressable>
         </View>
 
@@ -127,20 +161,11 @@ const AddIncomeExpensesScreen = () => {
             <Text style={mainStyle.inputText}>Category</Text>
             <View style={mainStyle.input}>
               <View style={mainStyle.flexRow}>
-                <Text style={mainStyle.font16}>{category}</Text>
+                <Text style={mainStyle.font16}>{category?.value}</Text>
               </View>
             </View>
           </View>
         </Pressable>
-
-        {/* <View style={mainStyle.flexRow}>
-          <Text style={mainStyle.inputText}>Category</Text>
-          <TextInput
-            style={mainStyle.input}
-            value={category}
-            onChangeText={(text) => setCategory(text)}
-          />
-        </View> */}
 
         <View style={mainStyle.flexRow}>
           <Text style={mainStyle.inputText}>Amount</Text>
@@ -162,7 +187,7 @@ const AddIncomeExpensesScreen = () => {
           />
         </View>
 
-        <View>
+        <View style={{ marginVertical: 12 }}>
           <Button title="Save" onPress={handleTransactionSave} />
         </View>
 
@@ -177,20 +202,14 @@ const AddIncomeExpensesScreen = () => {
             />
           )}
         </View>
-      </ScrollView>
-
-      <View>
-        <Text>{JSON.stringify(data)}</Text>
       </View>
 
       {accountOrCategory !== null && (
-        <View>
-          <OptionSelector
-            accountOrCategory={accountOrCategory}
-            transactionType={transactionType}
-            selectOptions={handleOptionSelection}
-          />
-        </View>
+        <OptionSelector
+          accountOrCategory={accountOrCategory}
+          transactionType={transactionType}
+          selectOptions={handleOptionSelection}
+        />
       )}
     </View>
   );

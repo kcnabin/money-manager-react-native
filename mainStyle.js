@@ -36,8 +36,6 @@ export const mainStyle = StyleSheet.create({
     fontFamily: "main",
     fontSize: 16,
     width: 70,
-    // borderWidth: 1,
-    // borderColor: "black",
   },
   font16: {
     fontFamily: "main",
@@ -50,9 +48,7 @@ export const mainStyle = StyleSheet.create({
   flexRow: {
     flexDirection: "row",
     alignItems: "center",
-    // borderWidth: 1,
-    // borderColor: "black",
-    paddingVertical: 12,
-    columnGap: 12,
+    paddingVertical: 8,
+    columnGap: 8,
   },
 });

@@ -2,19 +2,19 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = [
   {
-    id: "0",
+    id: "default-income-id-salary",
     value: "Salary",
   },
   {
-    id: "1",
+    id: "default-income-id-allowances",
     value: "Allowances",
   },
   {
-    id: "2",
+    id: "default-income-id-others",
     value: "Others",
   },
   {
-    id: "3",
+    id: "default-income-id-bonus",
     value: "Bonus",
   },
 ];

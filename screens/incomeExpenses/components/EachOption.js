@@ -1,17 +1,32 @@
-import { View, Text, Pressable } from "react-native";
+import { Text, Pressable, StyleSheet } from "react-native";
 
-const EachOption = ({ value, selectOptions }) => {
+const EachOption = ({ item, selectOptions }) => {
   const handleOptionSelection = () => {
-    selectOptions(value);
+    selectOptions(item);
   };
   return (
     <Pressable
-      style={{ padding: 12, borderWidth: 1, borderColor: "black", flex: 1 }}
+      style={style.option}
       onPress={handleOptionSelection}
+      android_ripple={{ color: "#c5c5c5" }}
     >
-      <Text>{value}</Text>
+      <Text style={style.optionText}>{item.value}</Text>
     </Pressable>
   );
 };
 
 export default EachOption;
+
+const style = StyleSheet.create({
+  option: {
+    padding: 12,
+    borderWidth: 1,
+    borderColor: "#cccccc",
+    flex: 1,
+    flexDirection: "row",
+  },
+  optionText: {
+    fontSize: 16,
+    fontFamily: "main",
+  },
+});

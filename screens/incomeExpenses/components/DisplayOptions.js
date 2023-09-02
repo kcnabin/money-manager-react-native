@@ -6,11 +6,10 @@ const DisplayOptions = ({ data, selectOptions }) => {
     <FlatList
       data={data}
       renderItem={({ item }) => (
-        <EachOption value={item.value} selectOptions={selectOptions} />
+        <EachOption item={item} selectOptions={selectOptions} />
       )}
       keyExtractor={(item) => item.id}
       numColumns={3}
-      style={{ flex: 1, borderColor: "red", flex: 1 }}
     />
   );
 };

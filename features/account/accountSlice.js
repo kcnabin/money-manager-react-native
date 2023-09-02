@@ -2,19 +2,19 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = [
   {
-    id: "0",
+    id: "default-account-id-cash",
     value: "Cash",
   },
   {
-    id: "1",
+    id: "default-account-id-mobile-banking",
     value: "Mobile Banking",
   },
   {
-    id: "2",
+    id: "default-account-id-credit-card",
     value: "Credit Card",
   },
   {
-    id: "3",
+    id: "default-account-id-debit-card",
     value: "Debit Card",
   },
 ];

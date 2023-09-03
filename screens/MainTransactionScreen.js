@@ -2,6 +2,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 import TransactionScreen from "./TransactionScreen";
 import AddIncomeExpensesScreen from "./incomeExpenses/AddIncomeExpensesScreen";
+import EditOptionsScreen from "./EditOptionsScreen";
 
 const Stack = createStackNavigator();
 
@@ -18,7 +19,14 @@ const MainTransactionScreen = () => {
       <Stack.Screen
         name="AddIncomeExpenses"
         component={AddIncomeExpensesScreen}
-        options={{}}
+      />
+
+      <Stack.Screen
+        name="EditOptions"
+        component={EditOptionsScreen}
+        options={{
+          headerTitle: "Setting",
+        }}
       />
     </Stack.Navigator>
   );

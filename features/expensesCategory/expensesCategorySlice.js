@@ -22,7 +22,19 @@ const initialState = [
 const expensesCategorySlice = createSlice({
   name: "expensesCategory",
   initialState,
-  reducers: {},
+  reducers: {
+    editExpensesCategory: (state, action) => {
+      return state.map((expensesCategory) =>
+        expensesCategory.id !== action.payload.id
+          ? expensesCategory
+          : {
+              id: action.payload.id,
+              value: action.payload.newValue,
+            }
+      );
+    },
+  },
 });
 
 export default expensesCategorySlice.reducer;
+export const { editExpensesCategory } = expensesCategorySlice.actions;

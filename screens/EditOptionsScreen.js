@@ -1,8 +1,12 @@
 import { useEffect } from "react";
-import { View, Text } from "react-native";
+import { useSelector } from "react-redux";
+import DisplayOptions from "./editOptionsComponents/DisplayOptions";
 
 const EditOptionsScreen = ({ route, navigation }) => {
   const { option } = route.params;
+  const account = useSelector((state) => state.account);
+  const incomeCategory = useSelector((state) => state.incomeCategory);
+  const expensesCategory = useSelector((state) => state.expensesCategory);
 
   useEffect(() => {
     navigation.setOptions({
@@ -15,11 +19,15 @@ const EditOptionsScreen = ({ route, navigation }) => {
     });
   }, [option]);
 
-  return (
-    <View>
-      <Text>{option}</Text>
-    </View>
-  );
+  if (option === "account") {
+    return <DisplayOptions options={account} optionType={option} />;
+  }
+
+  if (option === "income") {
+    return <DisplayOptions options={incomeCategory} optionType={option} />;
+  }
+
+  return <DisplayOptions options={expensesCategory} optionType={option} />;
 };
 
 export default EditOptionsScreen;

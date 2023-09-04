@@ -22,7 +22,16 @@ const initialState = [
 const incomeCategorySlice = createSlice({
   name: "incomeCategory",
   initialState,
-  reducers: {},
+  reducers: {
+    editIncomeCategory: (state, action) => {
+      return state.map((incomeCategory) =>
+        incomeCategory.id !== action.payload.id
+          ? incomeCategory
+          : { id: action.payload.id, value: action.payload.newValue }
+      );
+    },
+  },
 });
 
 export default incomeCategorySlice.reducer;
+export const { editIncomeCategory } = incomeCategorySlice.actions;

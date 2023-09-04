@@ -22,7 +22,16 @@ const initialState = [
 const accountSlice = createSlice({
   name: "accountSlice",
   initialState,
-  reducers: {},
+  reducers: {
+    editAccount: (state, action) => {
+      return state.map((account) =>
+        account.id !== action.payload.id
+          ? account
+          : { id: action.payload.id, value: action.payload.newValue }
+      );
+    },
+  },
 });
 
 export default accountSlice.reducer;
+export const { editAccount } = accountSlice.actions;

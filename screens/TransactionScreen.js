@@ -25,6 +25,12 @@ const TransactionScreen = ({ navigation }) => {
           }}
         >
           <TopTab.Screen
+            name="YearTab"
+            component={YearTab}
+            options={{ title: "Year" }}
+          />
+
+          <TopTab.Screen
             name="CalenderTab"
             component={CalendarTab}
             options={{ title: "Calendar" }}
@@ -40,12 +46,6 @@ const TransactionScreen = ({ navigation }) => {
             name="MonthTab"
             component={MonthTab}
             options={{ title: "Month" }}
-          />
-
-          <TopTab.Screen
-            name="YearTab"
-            component={YearTab}
-            options={{ title: "Year" }}
           />
         </TopTab.Navigator>
       </View>

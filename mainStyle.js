@@ -51,4 +51,11 @@ export const mainStyle = StyleSheet.create({
     paddingVertical: 8,
     columnGap: 8,
   },
+
+  incomeColor: {
+    color: allColors.incomeColor,
+  },
+  expensesColor: {
+    color: allColors.expensesColor,
+  },
 });

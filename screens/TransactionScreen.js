@@ -25,18 +25,6 @@ const TransactionScreen = ({ navigation }) => {
           }}
         >
           <TopTab.Screen
-            name="YearTab"
-            component={YearTab}
-            options={{ title: "Year" }}
-          />
-
-          <TopTab.Screen
-            name="CalenderTab"
-            component={CalendarTab}
-            options={{ title: "Calendar" }}
-          />
-
-          <TopTab.Screen
             name="DayTab"
             component={DayTab}
             options={{ title: "Day" }}
@@ -46,6 +34,18 @@ const TransactionScreen = ({ navigation }) => {
             name="MonthTab"
             component={MonthTab}
             options={{ title: "Month" }}
+          />
+
+          <TopTab.Screen
+            name="YearTab"
+            component={YearTab}
+            options={{ title: "Year" }}
+          />
+
+          <TopTab.Screen
+            name="CalenderTab"
+            component={CalendarTab}
+            options={{ title: "Calendar" }}
           />
         </TopTab.Navigator>
       </View>

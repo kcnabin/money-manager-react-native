@@ -42,9 +42,9 @@ export default EachDayTransaction;
 const style = StyleSheet.create({
   dayContainer: {
     paddingHorizontal: 12,
-    marginVertical: 8,
-    borderWidth: 1,
-    borderColor: "black",
+    paddingVertical: 8,
+    marginBottom: 12,
+    backgroundColor: "white",
   },
   daySummary: {
     flexDirection: "row",

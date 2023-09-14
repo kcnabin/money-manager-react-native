@@ -39,16 +39,15 @@ const style = StyleSheet.create({
     borderBottomColor: allColors.gray,
   },
   eachTransaction: {
-    paddingVertical: 12,
-    paddingHorizontal: 18,
+    paddingVertical: 8,
+    paddingHorizontal: 4,
   },
   eachTransactionTitle: {
     fontSize: 16,
     textAlign: "center",
   },
   eachTransactionValue: {
-    paddingTop: 4,
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "bold",
     textAlign: "center",
   },

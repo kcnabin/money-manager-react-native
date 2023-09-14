@@ -10,4 +10,5 @@ export const allColors = {
   whiteSmoke: "#f5f5f5",
   gray: "#807b6b87",
   pillBg: "#a1a1a1",
+  lightGray: "#cccccc",
 };

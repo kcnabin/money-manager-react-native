@@ -1,17 +1,38 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Pressable } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { useSelector } from "react-redux";
+
 import { mainStyle } from "../../../mainStyle";
+import { allColors } from "../../../Colors";
 
 const EachTransaction = ({ transaction }) => {
+  const incomeCategory = useSelector((state) => state.incomeCategory);
+  const expensesCategory = useSelector((state) => state.expensesCategory);
+
+  const transactionCategory =
+    incomeCategory.find((category) => category.id === transaction.category) ||
+    expensesCategory.find((category) => category.id === transaction.category);
+
+  const transactionAccount = useSelector((state) =>
+    state.account.find((eachAccount) => eachAccount.id === transaction.account)
+  );
+
+  const navigation = useNavigation();
+
   return (
-    <View style={style.transaction}>
+    <Pressable
+      style={style.transaction}
+      android_ripple={{ color: allColors.lightGray }}
+      onPress={() => navigation.navigate("AddIncomeExpenses", { transaction })}
+    >
       <View style={style.category}>
-        <Text>{transaction?.category}...</Text>
+        <Text>{transactionCategory.value}</Text>
         {/* <Text>{transaction?.category.substring(0, 10)}...</Text> */}
       </View>
 
       <View style={style.note}>
-        <Text>{transaction?.note}</Text>
-        <Text>{transaction?.account}</Text>
+        <Text style={style.noteText}>{transaction?.note}</Text>
+        <Text>{transactionAccount.value}</Text>
       </View>
 
       <View style={style.amount}>
@@ -26,7 +47,7 @@ const EachTransaction = ({ transaction }) => {
           {Number(transaction?.amount).toLocaleString()}
         </Text>
       </View>
-    </View>
+    </Pressable>
   );
 };
 
@@ -36,15 +57,20 @@ const style = StyleSheet.create({
   transaction: {
     flexDirection: "row",
     justifyContent: "space-between",
-    gap: 12,
+    gap: 8,
     alignItems: "center",
-    marginVertical: 8,
+    marginTop: 8,
+    paddingVertical: 8,
   },
   category: {
     flex: 1,
   },
   note: {
     flex: 2,
+  },
+  noteText: {
+    fontSize: 16,
+    fontWeight: "500",
   },
   amount: {
     flex: 1,

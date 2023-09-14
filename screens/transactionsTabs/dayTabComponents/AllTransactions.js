@@ -1,4 +1,6 @@
+import { ScrollView, StyleSheet } from "react-native";
 import EachDayTransaction from "./EachDayTransaction";
+import { allColors } from "../../../Colors";
 
 const AllTransactions = ({ transactions }) => {
   const dayArray = [
@@ -47,12 +49,19 @@ const AllTransactions = ({ transactions }) => {
   );
 
   return (
-    <>
+    <ScrollView style={style.container}>
       {dayArrayWithTransaction.map((eachDayTransactions, i) => (
         <EachDayTransaction key={i} transactions={eachDayTransactions} />
       ))}
-    </>
+    </ScrollView>
   );
 };
 
 export default AllTransactions;
+
+const style = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: allColors.lightGray,
+  },
+});

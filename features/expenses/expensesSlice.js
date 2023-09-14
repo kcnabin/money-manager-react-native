@@ -8,6 +8,7 @@ const initialState = [
     date: "Mon Sep 11 2023 18:40:52 GMT+0545",
     note: "Dairy Milk",
     type: "expenses",
+    id: "default-expenses-id-0",
   },
   {
     account: "default-account-id-credit-card",
@@ -16,6 +17,7 @@ const initialState = [
     date: "Mon Sep 12 2023 18:41:31 GMT+0545",
     note: "Petrol",
     type: "expenses",
+    id: "default-expenses-id-1",
   },
   {
     account: "default-account-id-credit-card",
@@ -24,6 +26,7 @@ const initialState = [
     date: "Mon Jun 11 2023 18:41:31 GMT+0545",
     note: "Petrol",
     type: "expenses",
+    id: "default-expenses-id-2",
   },
 ];
 
@@ -34,8 +37,19 @@ const expensesSlice = createSlice({
     addExpenses: (state, action) => {
       return [...state, action.payload];
     },
+    updateExpenses: (state, action) => {
+      return state.map((expense) => {
+        if (expense.id !== action.payload.id) {
+          return expense;
+        }
+        return {
+          ...expense,
+          ...action.payload.updatedObject,
+        };
+      });
+    },
   },
 });
 
 export default expensesSlice.reducer;
-export const { addExpenses } = expensesSlice.actions;
+export const { addExpenses, updateExpenses } = expensesSlice.actions;

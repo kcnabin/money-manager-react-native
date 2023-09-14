@@ -1,8 +1,13 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
-import { addIncome } from "../../features/income/incomeSlice";
-import { addExpenses } from "../../features/expenses/expensesSlice";
+import { addIncome, updateIncome } from "../../features/income/incomeSlice";
+import uuid from "react-native-uuid";
+
+import {
+  addExpenses,
+  updateExpenses,
+} from "../../features/expenses/expensesSlice";
 
 import {
   View,
@@ -21,7 +26,7 @@ import AccountPicker from "./components/AccountPicker";
 import { mainStyle } from "../../mainStyle";
 import { allColors } from "../../Colors";
 
-const AddIncomeExpensesScreen = () => {
+const AddIncomeExpensesScreen = ({ route }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
@@ -37,6 +42,36 @@ const AddIncomeExpensesScreen = () => {
   const [accountOrCategory, setAccountOrCategory] = useState(null);
   const [transactionType, setTransactionType] = useState("expenses");
 
+  const allAccount = useSelector((state) => state.account);
+  const incomeCategory = useSelector((state) => state.incomeCategory);
+  const expensesCategory = useSelector((state) => state.expensesCategory);
+
+  useEffect(() => {
+    if (route.params) {
+      const { account, amount, category, date, note, type } =
+        route.params.transaction;
+
+      const savedAccount = allAccount.find(
+        (eachAccount) => eachAccount.id === account
+      );
+
+      const savedCategory =
+        incomeCategory.find(
+          (eachIncomeCategory) => eachIncomeCategory.id === category
+        ) ||
+        expensesCategory.find(
+          (eachExpensesCategory) => eachExpensesCategory.id === category
+        );
+
+      setTransactionType(type);
+      setDate(new Date(date));
+      setAccount(savedAccount);
+      setCategory(savedCategory);
+      setAmount(amount);
+      setNote(note);
+    }
+  }, [route.params]);
+
   useEffect(() => {
     navigation.setOptions({
       title: transactionType.toUpperCase(),
@@ -51,12 +86,31 @@ const AddIncomeExpensesScreen = () => {
       date: date.toString(),
       amount,
       note,
+      id: uuid.v4(),
     };
 
     if (transactionType === "income") {
-      dispatch(addIncome(transactionObject));
+      if (route.params) {
+        dispatch(
+          updateIncome({
+            id: route.params.transaction.id,
+            updatedObject: transactionObject,
+          })
+        );
+      } else {
+        dispatch(addIncome(transactionObject));
+      }
     } else if (transactionType === "expenses") {
-      dispatch(addExpenses(transactionObject));
+      if (route.params) {
+        dispatch(
+          updateExpenses({
+            id: route.params.transaction.id,
+            updatedObject: transactionObject,
+          })
+        );
+      } else {
+        dispatch(addExpenses(transactionObject));
+      }
     }
 
     navigation.navigate("AllTransactions");

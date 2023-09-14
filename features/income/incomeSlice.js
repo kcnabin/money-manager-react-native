@@ -8,6 +8,7 @@ const initialState = [
     date: "Mon Sep 11 2023 18:38:25 GMT+0545",
     note: "Mobil A/W",
     type: "income",
+    id: "default-income-id-0",
   },
   {
     account: "default-account-id-mobile-banking",
@@ -16,6 +17,7 @@ const initialState = [
     date: "Mon Sep 11 2023 18:40:04 GMT+0545",
     note: "Festival",
     type: "income",
+    id: "default-income-id-1",
   },
 ];
 
@@ -26,8 +28,19 @@ const incomeSlice = createSlice({
     addIncome: (state, action) => {
       return [...state, action.payload];
     },
+    updateIncome: (state, action) => {
+      return state.map((income) => {
+        if (income.id !== action.payload.id) {
+          return income;
+        }
+        return {
+          ...income,
+          ...action.payload.updatedObject,
+        };
+      });
+    },
   },
 });
 
 export default incomeSlice.reducer;
-export const { addIncome } = incomeSlice.actions;
+export const { addIncome, updateIncome } = incomeSlice.actions;

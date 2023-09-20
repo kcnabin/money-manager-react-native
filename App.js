@@ -65,7 +65,7 @@ const App = () => {
             />
 
             <Tab.Screen
-              name="MoreScren"
+              name="MoreScreen"
               component={MoreScreen}
               options={{
                 title: "More",

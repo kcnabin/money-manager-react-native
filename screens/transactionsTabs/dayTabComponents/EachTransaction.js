@@ -70,7 +70,6 @@ const style = StyleSheet.create({
   },
   noteText: {
     fontSize: 16,
-    fontWeight: "500",
   },
   amount: {
     flex: 1,

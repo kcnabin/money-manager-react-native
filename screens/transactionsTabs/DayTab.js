@@ -1,18 +1,29 @@
 import { View } from "react-native";
-import { mainStyle } from "../../mainStyle";
-import DailySummary from "./dayTabComponents/DailySummary";
 import { useSelector } from "react-redux";
-import { getTotalFromTransactions } from "../../helper/getTotalFromTransactions";
-import { getCurrentMonthTransactions } from "../../helper/getCurrentMonthTransactions";
+
+import DailySummary from "./dayTabComponents/DailySummary";
 import AllTransactions from "./dayTabComponents/AllTransactions";
 
+import { getTotalFromTransactions } from "../../helper/getTotalFromTransactions";
+import { getCurrentMonthTransactions } from "../../helper/getCurrentMonthTransactions";
+
+import { mainStyle } from "../../mainStyle";
+
 const DayTab = () => {
+  const selectedMonth = useSelector((state) => state.selectedMonth);
+
   const allExpenses = useSelector((state) => state.expenses);
-  const currentMonthExpenses = getCurrentMonthTransactions(allExpenses);
+  const currentMonthExpenses = getCurrentMonthTransactions(
+    allExpenses,
+    selectedMonth
+  );
   const dailyExpenses = getTotalFromTransactions(currentMonthExpenses);
 
   const allIncome = useSelector((state) => state.income);
-  const currentMonthIncome = getCurrentMonthTransactions(allIncome);
+  const currentMonthIncome = getCurrentMonthTransactions(
+    allIncome,
+    selectedMonth
+  );
   const dailyIncome = getTotalFromTransactions(currentMonthIncome);
 
   const dailyTotal = dailyIncome - dailyExpenses;

@@ -44,9 +44,9 @@ const AllTransactions = ({ transactions }) => {
     dayArray[date].push(transaction);
   });
 
-  const dayArrayWithTransaction = dayArray.filter(
-    (eachDay) => eachDay.length > 0
-  );
+  const dayArrayWithTransaction = dayArray
+    .filter((eachDay) => eachDay.length > 0)
+    .reverse();
 
   return (
     <ScrollView style={style.container}>

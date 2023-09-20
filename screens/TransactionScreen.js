@@ -60,13 +60,12 @@ const TransactionScreen = ({ navigation }) => {
         </TopTab.Navigator>
       </View>
 
-      <View style={{ margin: 12 }}>
-        <Button
-          title="Add"
-          color={allColors.tabActive}
-          onPress={() => navigation.navigate("AddIncomeExpenses")}
-        />
-      </View>
+      <Pressable
+        style={style.addIconContainer}
+        onPress={() => navigation.navigate("AddIncomeExpenses")}
+      >
+        <MaterialIcons name="add" size={30} color="white" />
+      </Pressable>
     </View>
   );
 };
@@ -84,5 +83,16 @@ const style = StyleSheet.create({
   search: {
     marginRight: 12,
     padding: 4,
+  },
+  addIconContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    position: "absolute",
+    bottom: 20,
+    right: 20,
+    width: 70,
+    height: 70,
+    borderRadius: 35,
+    backgroundColor: allColors.incomeColor,
   },
 });

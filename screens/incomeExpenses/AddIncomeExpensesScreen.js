@@ -16,6 +16,7 @@ import {
   StyleSheet,
   Button,
   Pressable,
+  Alert,
 } from "react-native";
 
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -79,6 +80,18 @@ const AddIncomeExpensesScreen = ({ route }) => {
   }, [transactionType]);
 
   const handleTransactionSave = () => {
+    if (!account) {
+      return Alert.alert("Account must be selected!");
+    }
+
+    if (!category) {
+      return Alert.alert("Category must be selected!");
+    }
+
+    if (!amount) {
+      return Alert.alert("Kindly enter transaction amount!");
+    }
+
     const transactionObject = {
       type: transactionType,
       account: account.id,
@@ -241,8 +254,16 @@ const AddIncomeExpensesScreen = ({ route }) => {
           />
         </View>
 
-        <View style={{ marginVertical: 12 }}>
-          <Button title="Save" onPress={handleTransactionSave} />
+        <View style={style.buttonsContainer}>
+          <View style={style.buttonStyle}>
+            <Button title="Save" onPress={handleTransactionSave} />
+          </View>
+
+          {route.params && (
+            <View style={style.buttonStyle}>
+              <Button title="Delete" color={allColors.expensesColor} />
+            </View>
+          )}
         </View>
 
         <View>
@@ -275,5 +296,13 @@ const style = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
+  },
+  buttonsContainer: {
+    flexDirection: "row",
+    marginVertical: 16,
+    gap: 12,
+  },
+  buttonStyle: {
+    flex: 1,
   },
 });

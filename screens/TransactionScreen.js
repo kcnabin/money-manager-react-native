@@ -1,4 +1,4 @@
-import { View, Text, Button } from "react-native";
+import { View, StyleSheet, Button, Pressable } from "react-native";
 import { mainStyle } from "../mainStyle";
 
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
@@ -6,15 +6,25 @@ import CalendarTab from "./transactionsTabs/CalendarTab";
 import DayTab from "./transactionsTabs/DayTab";
 import MonthTab from "./transactionsTabs/MonthTab";
 import YearTab from "./transactionsTabs/YearTab";
+
 import { allColors } from "../Colors";
+import SelectedMonthAndYear from "./components/SelectedMonthAndYear";
+import { MaterialIcons } from "@expo/vector-icons";
 
 const TopTab = createMaterialTopTabNavigator();
 
 const TransactionScreen = ({ navigation }) => {
   return (
     <View style={mainStyle.fullArea}>
-      <View style={mainStyle.header}>
-        <Text style={mainStyle.headerText}>Transactions Header and others</Text>
+      <View style={style.headerContainer}>
+        <SelectedMonthAndYear />
+
+        <Pressable
+          style={style.search}
+          onPress={() => navigation.navigate("Search")}
+        >
+          <MaterialIcons name="search" size={24} color="black" />
+        </Pressable>
       </View>
 
       <View style={[mainStyle.fullArea]}>
@@ -62,3 +72,17 @@ const TransactionScreen = ({ navigation }) => {
 };
 
 export default TransactionScreen;
+
+const style = StyleSheet.create({
+  headerContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: 4,
+    backgroundColor: "white",
+  },
+  search: {
+    marginRight: 12,
+    padding: 4,
+  },
+});

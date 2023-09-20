@@ -4,6 +4,7 @@ import TransactionScreen from "./TransactionScreen";
 import AddIncomeExpensesScreen from "./incomeExpenses/AddIncomeExpensesScreen";
 import EditOptionsScreen from "./EditOptionsScreen";
 import EditOptionsFormScreen from "./EditOptionsFormScreen";
+import SearchScreen from "./SearchScreen";
 
 const Stack = createStackNavigator();
 
@@ -37,6 +38,8 @@ const MainTransactionScreen = () => {
           headerTitle: "Change Category",
         }}
       />
+
+      <Stack.Screen name="Search" component={SearchScreen} />
     </Stack.Navigator>
   );
 };

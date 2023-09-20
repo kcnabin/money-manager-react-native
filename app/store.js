@@ -4,6 +4,7 @@ import expensesCategoryReducer from "../features/expensesCategory/expensesCatego
 import accountReducer from "../features/account/accountSlice";
 import incomeReducer from "../features/income/incomeSlice";
 import expensesReducer from "../features/expenses/expensesSlice";
+import selectedMonthReducer from "../features/selectedMonth/selectedMonthSlice";
 
 export const store = configureStore({
   reducer: {
@@ -12,5 +13,6 @@ export const store = configureStore({
     account: accountReducer,
     income: incomeReducer,
     expenses: expensesReducer,
+    selectedMonth: selectedMonthReducer,
   },
 });

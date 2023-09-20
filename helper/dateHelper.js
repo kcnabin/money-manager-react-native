@@ -14,3 +14,22 @@ export const areMonthsEqual = (month1, month2) => {
   }
   return false;
 };
+
+const shortMonths = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
+
+export const displaySelectedMonthAndYear = (monthObject) => {
+  return `${shortMonths[monthObject.month]} ${monthObject.year}`;
+};

@@ -26,6 +26,7 @@ import AccountPicker from "./components/AccountPicker";
 
 import { mainStyle } from "../../mainStyle";
 import { allColors } from "../../Colors";
+import { insertNewExpenses, updateExpenseInDb } from "../../util/database";
 
 const AddIncomeExpensesScreen = ({ route }) => {
   const navigation = useNavigation();
@@ -68,7 +69,7 @@ const AddIncomeExpensesScreen = ({ route }) => {
       setDate(new Date(date));
       setAccount(savedAccount);
       setCategory(savedCategory);
-      setAmount(amount);
+      setAmount(amount.toString());
       setNote(note);
     }
   }, [route.params]);
@@ -79,7 +80,7 @@ const AddIncomeExpensesScreen = ({ route }) => {
     });
   }, [transactionType]);
 
-  const handleTransactionSave = () => {
+  const handleTransactionSave = async () => {
     if (!account) {
       return Alert.alert("Account must be selected!");
     }
@@ -115,13 +116,20 @@ const AddIncomeExpensesScreen = ({ route }) => {
       }
     } else if (transactionType === "expenses") {
       if (route.params) {
-        dispatch(
-          updateExpenses({
-            id: route.params.transaction.id,
-            updatedObject: transactionObject,
-          })
-        );
+        try {
+          await updateExpenseInDb(transactionObject);
+          dispatch(
+            updateExpenses({
+              id: route.params.transaction.id,
+              updatedObject: transactionObject,
+            })
+          );
+        } catch (error) {
+          Alert.alert("Error updating");
+          console.log("here is the error", error);
+        }
       } else {
+        await insertNewExpenses(transactionObject);
         dispatch(addExpenses(transactionObject));
       }
     }

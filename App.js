@@ -4,6 +4,9 @@ import { NavigationContainer } from "@react-navigation/native";
 import { Provider } from "react-redux";
 import { store } from "./app/store";
 
+import { useEffect, useState } from "react";
+import { init } from "./util/database";
+
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import "react-native-gesture-handler";
 
@@ -25,7 +28,22 @@ const App = () => {
     "main-bold": require("./assets/fonts/OpenSansBold.ttf"),
   });
 
-  if (!fontsLoaded) {
+  const [databaseInitializing, setDatabaseInitializing] = useState(true);
+
+  useEffect(() => {
+    const initializeDatabase = async () => {
+      await init();
+      setDatabaseInitializing(false);
+    };
+
+    try {
+      initializeDatabase();
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+
+  if (!fontsLoaded || databaseInitializing) {
     return <AppLoading />;
   }
 

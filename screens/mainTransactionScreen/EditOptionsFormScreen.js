@@ -2,9 +2,9 @@ import { TextInput, View, StyleSheet, Button } from "react-native";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 
-import { editAccount } from "../features/account/accountSlice";
-import { editExpensesCategory } from "../features/expensesCategory/expensesCategorySlice";
-import { editIncomeCategory } from "../features/incomeCategory/incomeCategorySlice";
+import { editAccount } from "../../features/account/accountSlice";
+import { editExpensesCategory } from "../../features/expensesCategory/expensesCategorySlice";
+import { editIncomeCategory } from "../../features/incomeCategory/incomeCategorySlice";
 
 const EditOptionsFormScreen = ({ route, navigation }) => {
   const { optionType, option } = route.params;

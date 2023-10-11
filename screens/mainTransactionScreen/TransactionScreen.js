@@ -1,14 +1,14 @@
 import { View, StyleSheet, Button, Pressable } from "react-native";
-import { mainStyle } from "../mainStyle";
+import { mainStyle } from "../../mainStyle";
 
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import CalendarTab from "./transactionsTabs/CalendarTab";
-import DayTab from "./transactionsTabs/DayTab";
-import MonthTab from "./transactionsTabs/MonthTab";
-import YearTab from "./transactionsTabs/YearTab";
+import CalendarTab from "./transactionScreen/CalendarScreen";
+import DayTab from "./transactionScreen/DayScreen";
+import MonthTab from "./transactionScreen/MonthScreen";
+import YearTab from "./transactionScreen/YearScreen";
 
-import { allColors } from "../Colors";
-import SelectedMonthAndYear from "./components/SelectedMonthAndYear";
+import { allColors } from "../../Colors";
+import SelectedMonthAndYear from "../components/SelectedMonthAndYear";
 import { MaterialIcons } from "@expo/vector-icons";
 
 const TopTab = createMaterialTopTabNavigator();

@@ -1,13 +1,13 @@
 import { View } from "react-native";
 import { useSelector } from "react-redux";
 
-import DailySummary from "./dayTabComponents/DailySummary";
-import AllTransactions from "./dayTabComponents/AllTransactions";
+import DailySummary from "./dayScreen/DailySummary";
+import AllTransactions from "./dayScreen/AllTransactions";
 
-import { getTotalFromTransactions } from "../../helper/getTotalFromTransactions";
-import { getCurrentMonthTransactions } from "../../helper/getCurrentMonthTransactions";
+import { getTotalFromTransactions } from "../../../helper/getTotalFromTransactions";
+import { getCurrentMonthTransactions } from "../../../helper/getCurrentMonthTransactions";
 
-import { mainStyle } from "../../mainStyle";
+import { mainStyle } from "../../../mainStyle";
 
 const DayTab = () => {
   const selectedMonth = useSelector((state) => state.selectedMonth);

@@ -1,7 +1,8 @@
 import { View, Text, StyleSheet } from "react-native";
-import { getTotalFromTransactions } from "../../../helper/getTotalFromTransactions";
 import EachTransaction from "./EachTransaction";
-import { mainStyle } from "../../../mainStyle";
+
+import { getTotalFromTransactions } from "../../../../helper/getTotalFromTransactions";
+import { mainStyle } from "../../../../mainStyle";
 
 const EachDayTransaction = ({ transactions }) => {
   const eachDayIncome = transactions?.filter(

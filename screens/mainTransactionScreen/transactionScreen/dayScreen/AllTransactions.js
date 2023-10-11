@@ -1,6 +1,6 @@
 import { ScrollView, StyleSheet } from "react-native";
 import EachDayTransaction from "./EachDayTransaction";
-import { allColors } from "../../../Colors";
+import { allColors } from "../../../../Colors";
 
 const AllTransactions = ({ transactions }) => {
   const dayArray = [

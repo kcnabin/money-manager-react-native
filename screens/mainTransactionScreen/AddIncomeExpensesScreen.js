@@ -20,13 +20,17 @@ import {
 } from "react-native";
 
 import DateTimePicker from "@react-native-community/datetimepicker";
-import OptionSelector from "./OptionSelector";
-import DateAndTimePicker from "./components/DateAndTimePicker";
-import AccountPicker from "./components/AccountPicker";
+import OptionSelector from "./addIncomeExpensesScreen/OptionSelector";
+import DateAndTimePicker from "./addIncomeExpensesScreen/DateAndTimePicker";
+import AccountPicker from "./addIncomeExpensesScreen/AccountPicker";
 
 import { mainStyle } from "../../mainStyle";
 import { allColors } from "../../Colors";
-import { insertNewExpenses, updateExpenseInDb } from "../../util/database";
+import {
+  insertNewExpenses,
+  insertNewIncome,
+  updateExpenseInDb,
+} from "../../util/database";
 
 const AddIncomeExpensesScreen = ({ route }) => {
   const navigation = useNavigation();
@@ -112,6 +116,7 @@ const AddIncomeExpensesScreen = ({ route }) => {
           })
         );
       } else {
+        await insertNewIncome(transactionObject);
         dispatch(addIncome(transactionObject));
       }
     } else if (transactionType === "expenses") {
@@ -126,7 +131,6 @@ const AddIncomeExpensesScreen = ({ route }) => {
           );
         } catch (error) {
           Alert.alert("Error updating");
-          console.log("here is the error", error);
         }
       } else {
         await insertNewExpenses(transactionObject);
@@ -155,7 +159,7 @@ const AddIncomeExpensesScreen = ({ route }) => {
   };
 
   const handleOptionSelection = (type) => {
-    if (accountOrCategory) {
+    if (accountOrCategory === "account") {
       setAccount(type);
     } else {
       setCategory(type);
@@ -227,11 +231,11 @@ const AddIncomeExpensesScreen = ({ route }) => {
         <DateAndTimePicker date={date} setShow={setShow} setMode={setMode} />
 
         <AccountPicker
-          pickAccount={() => setAccountOrCategory(true)}
+          pickAccount={() => setAccountOrCategory("account")}
           account={account}
         />
 
-        <Pressable onPress={() => setAccountOrCategory(false)}>
+        <Pressable onPress={() => setAccountOrCategory("category")}>
           <View style={mainStyle.flexRow}>
             <Text style={mainStyle.inputText}>Category</Text>
             <View style={mainStyle.input}>
@@ -242,29 +246,35 @@ const AddIncomeExpensesScreen = ({ route }) => {
           </View>
         </Pressable>
 
-        <View style={mainStyle.flexRow}>
-          <Text style={mainStyle.inputText}>Amount</Text>
-          <TextInput
-            style={mainStyle.input}
-            value={amount}
-            onChangeText={(value) => setAmount(value)}
-            inputMode="numeric"
-          />
-        </View>
+        <Pressable onPress={() => setAccountOrCategory(null)}>
+          <View style={mainStyle.flexRow}>
+            <Text style={mainStyle.inputText}>Amount</Text>
 
-        <View style={mainStyle.flexRow}>
-          <Text style={mainStyle.inputText}>Note</Text>
-          <TextInput
-            style={mainStyle.input}
-            value={note}
-            onChangeText={(text) => setNote(text)}
-            inputMode="text"
-          />
-        </View>
+            <TextInput
+              style={mainStyle.input}
+              value={amount}
+              onChangeText={(value) => setAmount(value)}
+              inputMode="numeric"
+            />
+          </View>
+
+          <View style={mainStyle.flexRow}>
+            <Text style={mainStyle.inputText}>Note</Text>
+            <TextInput
+              style={mainStyle.input}
+              value={note}
+              onChangeText={(text) => setNote(text)}
+              inputMode="text"
+            />
+          </View>
+        </Pressable>
 
         <View style={style.buttonsContainer}>
           <View style={style.buttonStyle}>
-            <Button title="Save" onPress={handleTransactionSave} />
+            <Button
+              title={route.params ? "Update" : "Save"}
+              onPress={handleTransactionSave}
+            />
           </View>
 
           {route.params && (
@@ -287,7 +297,7 @@ const AddIncomeExpensesScreen = ({ route }) => {
         </View>
       </View>
 
-      {accountOrCategory !== null && (
+      {accountOrCategory && (
         <OptionSelector
           accountOrCategory={accountOrCategory}
           transactionType={transactionType}

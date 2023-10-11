@@ -4,9 +4,6 @@ import { NavigationContainer } from "@react-navigation/native";
 import { Provider } from "react-redux";
 import { store } from "./app/store";
 
-import { useEffect, useState } from "react";
-import { init } from "./util/database";
-
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import "react-native-gesture-handler";
 
@@ -14,39 +11,12 @@ import SummaryScreen from "./screens/SummaryScreen";
 import MoreScreen from "./screens/MoreScreen";
 import MainTransactionScreen from "./screens/MainTransactionScreen";
 
-import AppLoading from "expo-app-loading";
 import { MaterialIcons } from "@expo/vector-icons";
 import { allColors } from "./Colors";
-import { useFonts } from "expo-font";
 
 const Tab = createMaterialBottomTabNavigator();
 
 const App = () => {
-  const [fontsLoaded] = useFonts({
-    witcher: require("./assets/fonts/Witcher.ttf"),
-    main: require("./assets/fonts/OpenSans.ttf"),
-    "main-bold": require("./assets/fonts/OpenSansBold.ttf"),
-  });
-
-  const [databaseInitializing, setDatabaseInitializing] = useState(true);
-
-  useEffect(() => {
-    const initializeDatabase = async () => {
-      await init();
-      setDatabaseInitializing(false);
-    };
-
-    try {
-      initializeDatabase();
-    } catch (error) {
-      console.log(error);
-    }
-  }, []);
-
-  if (!fontsLoaded || databaseInitializing) {
-    return <AppLoading />;
-  }
-
   return (
     <Provider store={store}>
       <SafeAreaView style={style.appContainer}>
@@ -58,7 +28,6 @@ const App = () => {
           >
             <Tab.Screen
               name="TransactionScreen"
-              // component={TransactionScreen}
               component={MainTransactionScreen}
               options={{
                 title: "Transactions",

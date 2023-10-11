@@ -1,9 +1,8 @@
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useSelector } from "react-redux";
-
-import { mainStyle } from "../../../mainStyle";
-import { allColors } from "../../../Colors";
+import { allColors } from "../../../../Colors";
+import { mainStyle } from "../../../../mainStyle";
 
 const EachTransaction = ({ transaction }) => {
   const incomeCategory = useSelector((state) => state.incomeCategory);
@@ -32,7 +31,7 @@ const EachTransaction = ({ transaction }) => {
 
       <View style={style.note}>
         <Text style={style.noteText}>{transaction?.note}</Text>
-        <Text>{transactionAccount.value}</Text>
+        <Text>{transactionAccount?.value}</Text>
       </View>
 
       <View style={style.amount}>

@@ -1,5 +1,5 @@
 import { View, Text } from "react-native";
-import { mainStyle } from "../../mainStyle";
+import { mainStyle } from "../../../mainStyle";
 import { useSelector } from "react-redux";
 
 const YearTab = () => {

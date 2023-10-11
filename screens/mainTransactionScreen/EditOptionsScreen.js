@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import DisplayOptions from "./editOptionsComponents/DisplayOptions";
+import DisplayOptions from "../editOptionsComponents/DisplayOptions";
 
 const EditOptionsScreen = ({ route, navigation }) => {
   const { option } = route.params;

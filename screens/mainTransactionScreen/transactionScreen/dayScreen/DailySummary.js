@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet } from "react-native";
-import { mainStyle } from "../../../mainStyle";
-import { allColors } from "../../../Colors";
+import { mainStyle } from "../../../../mainStyle";
+import { allColors } from "../../../../Colors";
 
 const DailySummary = ({ dailyIncome, dailyExpenses, dailyTotal }) => {
   return (

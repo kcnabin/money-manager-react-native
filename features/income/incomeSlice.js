@@ -39,8 +39,12 @@ const incomeSlice = createSlice({
         };
       });
     },
+    initIncomeFromDb: (state, action) => {
+      return action.payload;
+    },
   },
 });
 
 export default incomeSlice.reducer;
-export const { addIncome, updateIncome } = incomeSlice.actions;
+export const { addIncome, updateIncome, initIncomeFromDb } =
+  incomeSlice.actions;

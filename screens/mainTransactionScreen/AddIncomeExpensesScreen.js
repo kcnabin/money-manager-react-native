@@ -1,11 +1,16 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
-import { addIncome, updateIncome } from "../../features/income/incomeSlice";
+import {
+  addIncome,
+  deleteIncome,
+  updateIncome,
+} from "../../features/income/incomeSlice";
 import uuid from "react-native-uuid";
 
 import {
   addExpenses,
+  deleteExpenses,
   updateExpenses,
 } from "../../features/expenses/expensesSlice";
 
@@ -27,9 +32,9 @@ import AccountPicker from "./addIncomeExpensesScreen/AccountPicker";
 import { mainStyle } from "../../mainStyle";
 import { allColors } from "../../Colors";
 import {
-  insertNewExpenses,
-  insertNewIncome,
-  updateExpenseInDb,
+  insertNewTransactionInDb,
+  updateTransactionInDb,
+  deleteTransactionFromDb,
 } from "../../util/database";
 
 const AddIncomeExpensesScreen = ({ route }) => {
@@ -102,27 +107,38 @@ const AddIncomeExpensesScreen = ({ route }) => {
       account: account.id,
       category: category.id,
       date: date.toString(),
-      amount,
+      amount: Number(amount),
       note,
-      id: uuid.v4(),
+      id: route?.params?.transaction?.id || uuid.v4(),
     };
 
     if (transactionType === "income") {
       if (route.params) {
-        dispatch(
-          updateIncome({
-            id: route.params.transaction.id,
-            updatedObject: transactionObject,
-          })
-        );
+        try {
+          await updateTransactionInDb(transactionObject, "income");
+          dispatch(
+            updateIncome({
+              id: route.params.transaction.id,
+              updatedObject: transactionObject,
+            })
+          );
+        } catch (error) {
+          Alert.alert("Error updating income...");
+          console.log(error);
+        }
       } else {
-        await insertNewIncome(transactionObject);
-        dispatch(addIncome(transactionObject));
+        try {
+          await insertNewTransactionInDb(transactionObject, "income");
+          dispatch(addIncome(transactionObject));
+        } catch (error) {
+          Alert.alert("Error adding new income...");
+          console.log(error);
+        }
       }
     } else if (transactionType === "expenses") {
       if (route.params) {
         try {
-          await updateExpenseInDb(transactionObject);
+          await updateTransactionInDb(transactionObject, "expenses");
           dispatch(
             updateExpenses({
               id: route.params.transaction.id,
@@ -130,15 +146,50 @@ const AddIncomeExpensesScreen = ({ route }) => {
             })
           );
         } catch (error) {
-          Alert.alert("Error updating");
+          Alert.alert("Error updating expense!");
+          console.log(error);
         }
       } else {
-        await insertNewExpenses(transactionObject);
-        dispatch(addExpenses(transactionObject));
+        try {
+          await insertNewTransactionInDb(transactionObject, "expenses");
+          dispatch(addExpenses(transactionObject));
+        } catch (error) {
+          Alert.alert("Error adding new expense...");
+          console.log(error);
+        }
       }
     }
 
     navigation.navigate("AllTransactions");
+  };
+
+  const handleDelete = (id, note) => {
+    Alert.alert("Want to Delete?", note, [
+      {
+        text: "Cancel",
+        onPress: () => {
+          return;
+        },
+      },
+      {
+        text: "Delete",
+        onPress: async () => {
+          try {
+            if (transactionType === "expenses") {
+              await deleteTransactionFromDb(id, "expenses");
+              dispatch(deleteExpenses({ id }));
+            } else {
+              await deleteTransactionFromDb(id, "income");
+              dispatch(deleteIncome({ id }));
+            }
+
+            navigation.goBack();
+          } catch (error) {
+            Alert.alert("Error Deleting!");
+          }
+        },
+      },
+    ]);
   };
 
   const resetForm = () => {
@@ -279,7 +330,11 @@ const AddIncomeExpensesScreen = ({ route }) => {
 
           {route.params && (
             <View style={style.buttonStyle}>
-              <Button title="Delete" color={allColors.expensesColor} />
+              <Button
+                title="Delete"
+                color={allColors.expensesColor}
+                onPress={() => handleDelete(route.params.transaction.id, note)}
+              />
             </View>
           )}
         </View>

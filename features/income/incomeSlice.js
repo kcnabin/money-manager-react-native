@@ -1,25 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = [
-  // {
-  //   account: "default-account-id-cash",
-  //   amount: "1500",
-  //   category: "default-income-id-allowances",
-  //   date: "Mon Sep 11 2023 18:38:25 GMT+0545",
-  //   note: "Mobil A/W",
-  //   type: "income",
-  //   id: "default-income-id-0",
-  // },
-  // {
-  //   account: "default-account-id-mobile-banking",
-  //   amount: "400",
-  //   category: "default-income-id-bonus",
-  //   date: "Mon Sep 11 2023 18:40:04 GMT+0545",
-  //   note: "Festival",
-  //   type: "income",
-  //   id: "default-income-id-1",
-  // },
-];
+const initialState = [];
 
 const incomeSlice = createSlice({
   name: "incomeSlice",
@@ -42,9 +23,12 @@ const incomeSlice = createSlice({
     initIncomeFromDb: (state, action) => {
       return action.payload;
     },
+    deleteIncome: (state, action) => {
+      return state.filter((income) => income.id !== action.payload.id);
+    },
   },
 });
 
 export default incomeSlice.reducer;
-export const { addIncome, updateIncome, initIncomeFromDb } =
+export const { addIncome, updateIncome, initIncomeFromDb, deleteIncome } =
   incomeSlice.actions;

@@ -61,18 +61,21 @@ export const initializeIncomeTable = () => {
   return promise;
 };
 
-export const insertNewExpenses = (expenses) => {
-  const { id, amount, date, note, type, account, category } = expenses;
+export const insertNewTransactionInDb = (transaction, table = "expenses") => {
+  const { id, amount, date, note, type, account, category } = transaction;
+
   const promise = new Promise((resolve, reject) => {
     database.transaction((tx) => {
-      tx.executeSql(
-        `
-        INSERT INTO expenses 
+      const sql = `
+        INSERT INTO ${table} 
         (id, amount, date, note, type, account, category)
-        VALUES (?,?,?,?,?,?,?)
-      `,
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+      `;
+
+      tx.executeSql(
+        sql,
         [id, amount, date, note, type, account, category],
-        (_, result) => {
+        () => {
           resolve();
         },
         (_, error) => {
@@ -85,25 +88,26 @@ export const insertNewExpenses = (expenses) => {
   return promise;
 };
 
-export const insertNewIncome = (income) => {
+export const updateTransactionInDb = (transaction, table = "expenses") => {
   const promise = new Promise((resolve, reject) => {
     database.transaction((tx) => {
+      const sql = `UPDATE ${table} 
+        SET amount=?, date=?, note=?, type=?, account=?, category=?
+        WHERE id=?
+      `;
+
       tx.executeSql(
-        `
-          INSERT INTO income
-          VALUES (?, ?, ?, ?, ?, ?, ?)
-        `,
+        sql,
         [
-          income.id,
-          income.amount,
-          income.date,
-          income.note,
-          income.type,
-          income.type,
-          income.category,
+          transaction.amount,
+          transaction.date,
+          transaction.note,
+          transaction.type,
+          transaction.account,
+          transaction.category,
+          transaction.id,
         ],
-        (_, result) => {
-          console.log("New income inserted");
+        () => {
           resolve();
         },
         (_, error) => {
@@ -112,6 +116,28 @@ export const insertNewIncome = (income) => {
       );
     });
   });
+
+  return promise;
+};
+
+export const deleteTransactionFromDb = (id, table = "expenses") => {
+  const promise = new Promise((resolve, reject) => {
+    const sql = `DELETE FROM ${table} WHERE id = ?`;
+
+    database.transaction((tx) => {
+      tx.executeSql(
+        sql,
+        [id],
+        () => {
+          resolve();
+        },
+        (_, error) => {
+          reject(error);
+        }
+      );
+    });
+  });
+
   return promise;
 };
 
@@ -146,28 +172,6 @@ export const fetchAllIncome = () => {
         (_, result) => {
           const data = result.rows._array;
           resolve(data);
-        },
-        (_, error) => {
-          reject(error);
-        }
-      );
-    });
-  });
-
-  return promise;
-};
-
-export const updateExpenseInDb = (expenseObject) => {
-  const { id, amount, date, note, type, account, category } = expenseObject;
-
-  const promise = new Promise((resolve, reject) => {
-    database.transaction((tx) => {
-      tx.executeSql(
-        `UPDATE expenses SET amount = ?, date = ?, note = ?, type = ?, account = ?, category = ?`,
-        [amount, date, note, type, account, category],
-        (_, result) => {
-          console.log("Updated in db");
-          resolve(result);
         },
         (_, error) => {
           reject(error);

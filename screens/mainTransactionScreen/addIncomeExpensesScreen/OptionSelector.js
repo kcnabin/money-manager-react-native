@@ -1,8 +1,9 @@
 import { View, Text, StyleSheet, Pressable } from "react-native";
-import DisplayOptions from "./DisplayOptions";
 import { useSelector } from "react-redux";
-import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+
+import { MaterialIcons } from "@expo/vector-icons";
+import DisplayOptions from "./DisplayOptions";
 
 const OptionSelector = ({
   accountOrCategory,
@@ -19,7 +20,11 @@ const OptionSelector = ({
     <View style={style.container}>
       <View style={style.optionHeader}>
         <Text style={style.headerText}>
-          {accountOrCategory === "account" ? "Account" : "Category"}
+          {accountOrCategory === "account"
+            ? "Account"
+            : transactionType === "income"
+            ? "Income Categories"
+            : "Expenses Categories"}
         </Text>
 
         <Pressable

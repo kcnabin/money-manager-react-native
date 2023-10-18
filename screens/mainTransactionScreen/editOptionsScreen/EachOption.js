@@ -1,19 +1,19 @@
-import { View, Text, StyleSheet, Pressable } from "react-native";
+import { View, Text, StyleSheet, Pressable, Alert } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
-import { allColors } from "../../Colors";
+import { allColors } from "../../../Colors";
 import { useNavigation } from "@react-navigation/native";
 
 const EachOption = ({ option, optionType }) => {
   const navigation = useNavigation();
 
-  const showEditForm = () => {
-    navigation.navigate("EditOptionsForm", { optionType, option });
+  const handleOptionDelete = () => {
+    Alert.alert(JSON.stringify(option));
   };
 
   return (
     <View style={style.option}>
       <View style={style.iconText}>
-        <Pressable>
+        <Pressable onPress={handleOptionDelete}>
           <MaterialIcons
             name="delete-outline"
             size={28}
@@ -23,7 +23,11 @@ const EachOption = ({ option, optionType }) => {
         <Text style={style.optionText}>{option.value}</Text>
       </View>
 
-      <Pressable onPress={showEditForm}>
+      <Pressable
+        onPress={() =>
+          navigation.navigate("EditOptionsForm", { optionType, option })
+        }
+      >
         <MaterialIcons name="edit" size={24} color="black" />
       </Pressable>
     </View>

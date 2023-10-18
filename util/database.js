@@ -201,3 +201,93 @@ export const deleteAllExpenses = () => {
 
   return promise;
 };
+
+export const initializeAccountTable = () => {
+  const promise = new Promise((resolve, reject) => {
+    database.transaction((tx) => {
+      tx.executeSql(
+        `
+          CREATE TABLE IF NOT EXISTS account (
+            id TEXT PRIMARY KEY NOT NULL,
+            value TEXT
+          )
+        `,
+        [],
+        () => {
+          resolve();
+        },
+        (_, error) => {
+          reject(error);
+        }
+      );
+    });
+  });
+
+  return promise;
+};
+
+export const insertNewAccountInDb = (accountObject) => {
+  const promise = new Promise((resolve, reject) => {
+    database.transaction((tx) => {
+      const { id, value } = accountObject;
+
+      tx.executeSql(
+        `
+          INSERT INTO account VALUES (?, ?)
+        `,
+        [id, value],
+        () => {
+          resolve();
+        },
+        (_, error) => {
+          reject(error);
+        }
+      );
+    });
+  });
+
+  return promise;
+};
+
+export const fetchAccountsFromDb = () => {
+  const promise = new Promise((resolve, reject) => {
+    database.transaction((tx) => {
+      tx.executeSql(
+        `SELECT * FROM account`,
+        [],
+        (_, result) => {
+          const data = result.rows._array;
+          resolve(data);
+        },
+        (_, error) => {
+          reject(error);
+        }
+      );
+    });
+  });
+
+  return promise;
+};
+
+export const updateCategoryInDb = (categoryObject) => {
+  const { id, value, table } = categoryObject;
+
+  const promise = new Promise((resolve, reject) => {
+    const sql = `UPDATE ${table} SET value = ? WHERE id = ?`;
+
+    database.transaction((tx) => {
+      tx.executeSql(
+        sql,
+        [value, id],
+        () => {
+          resolve();
+        },
+        (_, error) => {
+          reject(error);
+        }
+      );
+    });
+  });
+
+  return promise;
+};

@@ -5,22 +5,25 @@ import { useDispatch } from "react-redux";
 
 import { initExpensesFromDb } from "../features/expenses/expensesSlice";
 import { initIncomeFromDb } from "../features/income/incomeSlice";
+
 import {
   initializeExpensesTable,
   fetchAllExpenses,
   initializeIncomeTable,
   fetchAllIncome,
-  deleteAllExpenses,
+  initializeAccountTable,
+  fetchAccountsFromDb,
 } from "../util/database";
 
 import TransactionScreen from "./mainTransactionScreen/TransactionScreen";
 import EditOptionsScreen from "./mainTransactionScreen/EditOptionsScreen";
-import EditOptionsFormScreen from "./mainTransactionScreen/EditOptionsFormScreen";
+import EditOptionsFormScreen from "./mainTransactionScreen/editOptionsScreen/EditOptionsFormScreen";
 import SearchScreen from "./mainTransactionScreen/SearchScreen";
 import AddIncomeExpensesScreen from "./mainTransactionScreen/AddIncomeExpensesScreen";
 
 import { useFonts } from "expo-font";
 import AppLoading from "expo-app-loading";
+import { initAccountFromDb } from "../features/account/accountSlice";
 
 const Stack = createStackNavigator();
 
@@ -35,51 +38,34 @@ const MainTransactionScreen = () => {
   const [databaseInitializing, setDatabaseInitializing] = useState(true);
 
   useEffect(() => {
-    const initExpensesTable = async () => {
+    const initializeDatabase = async () => {
       await initializeExpensesTable();
+      await initializeIncomeTable();
+      await initializeAccountTable();
     };
 
     try {
-      initExpensesTable();
+      initializeDatabase();
     } catch (error) {
       console.log(error);
+    } finally {
     }
 
-    const fetchInitialExpenses = async () => {
-      const initialExpenses = await fetchAllExpenses();
-      dispatch(initExpensesFromDb(initialExpenses));
+    const fetchInitialData = async () => {
+      const expenses = await fetchAllExpenses();
+      dispatch(initExpensesFromDb(expenses));
+
+      const account = await fetchAccountsFromDb();
+      dispatch(initAccountFromDb(account));
     };
 
     try {
-      fetchInitialExpenses();
+      fetchInitialData();
     } catch (error) {
       console.log(error);
     }
 
     setDatabaseInitializing(false);
-  }, []);
-
-  useEffect(() => {
-    const initIncomeTable = async () => {
-      await initializeIncomeTable();
-    };
-
-    try {
-      initIncomeTable();
-    } catch (error) {
-      console.log(error);
-    }
-
-    const fetchInitialIncome = async () => {
-      const income = await fetchAllIncome();
-      dispatch(initIncomeFromDb(income));
-    };
-
-    try {
-      fetchInitialIncome();
-    } catch (error) {
-      console.log(error);
-    }
   }, []);
 
   if (!fontsLoaded || databaseInitializing) {
@@ -112,7 +98,7 @@ const MainTransactionScreen = () => {
         name="EditOptionsForm"
         component={EditOptionsFormScreen}
         options={{
-          headerTitle: "Change Category",
+          headerTitle: "Update Category",
         }}
       />
 

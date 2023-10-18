@@ -10,6 +10,7 @@ import YearTab from "./transactionScreen/YearScreen";
 import { allColors } from "../../Colors";
 import SelectedMonthAndYear from "../components/SelectedMonthAndYear";
 import { MaterialIcons } from "@expo/vector-icons";
+import CircularAddIcon from "../../components/CircularAddIcon";
 
 const TopTab = createMaterialTopTabNavigator();
 
@@ -64,7 +65,7 @@ const TransactionScreen = ({ navigation }) => {
         style={style.addIconContainer}
         onPress={() => navigation.navigate("AddIncomeExpenses")}
       >
-        <MaterialIcons name="add" size={30} color="white" />
+        <CircularAddIcon />
       </Pressable>
     </View>
   );
@@ -85,14 +86,8 @@ const style = StyleSheet.create({
     padding: 4,
   },
   addIconContainer: {
-    alignItems: "center",
-    justifyContent: "center",
     position: "absolute",
     bottom: 20,
     right: 20,
-    width: 70,
-    height: 70,
-    borderRadius: 35,
-    backgroundColor: allColors.incomeColor,
   },
 });

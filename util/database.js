@@ -84,8 +84,8 @@ export const initializeIncomeTable = () => {
             type TEXT,
             account TEXT,
             category TEXT,
-            FOREIGN KEY (account) REFERENCES account (id),
-            FOREIGN KEY (category) REFERENCES incomeCategory (id)
+            FOREIGN KEY (account) REFERENCES account (id) ON DELETE SET NULL,
+            FOREIGN KEY (category) REFERENCES incomeCategory (id) ON DELETE SET NULL
         )
       `,
         [],
@@ -115,8 +115,8 @@ export const initializeExpensesTable = () => {
           type TEXT,
           account TEXT,
           category TEXT,
-          FOREIGN KEY (category) REFERENCES expensesCategory (id),
-          FOREIGN KEY (account) REFERENCES account (id)
+          FOREIGN KEY (category) REFERENCES expensesCategory (id) ON DELETE SET NULL,
+          FOREIGN KEY (account) REFERENCES account (id) ON DELETE SET NULL
         )
       `,
         [],
@@ -168,6 +168,7 @@ export const fetchAllFromDb = (table, dateObject, dateRange) => {
   return promise;
 };
 
+// category (account / income Category / expenses category) operations
 export const insertNewCategoryInDb = (categoryType, categoryObject) => {
   const promise = new Promise((resolve, reject) => {
     database.transaction((tx) => {
@@ -186,6 +187,49 @@ export const insertNewCategoryInDb = (categoryType, categoryObject) => {
       tx.executeSql(
         sql,
         [id, value],
+        () => {
+          resolve();
+        },
+        (_, error) => {
+          reject(error);
+        }
+      );
+    });
+  });
+
+  return promise;
+};
+
+export const updateCategoryInDb = (categoryObject, table) => {
+  const { id, value } = categoryObject;
+
+  const promise = new Promise((resolve, reject) => {
+    const sql = `UPDATE ${table} SET value = ? WHERE id = ?`;
+
+    database.transaction((tx) => {
+      tx.executeSql(
+        sql,
+        [value, id],
+        () => {
+          resolve();
+        },
+        (_, error) => {
+          reject(error);
+        }
+      );
+    });
+  });
+
+  return promise;
+};
+
+export const deleteCategoryFromDb = (table, id) => {
+  const promise = new Promise((resolve, reject) => {
+    const sql = `DELETE FROM ${table} WHERE id = ?`;
+    database.transaction((tx) => {
+      tx.executeSql(
+        sql,
+        [id],
         () => {
           resolve();
         },
@@ -279,48 +323,6 @@ export const deleteTransactionFromDb = (id, table = "expenses") => {
   return promise;
 };
 
-// export const fetchAllExpenses = () => {
-//   const promise = new Promise((resolve, reject) => {
-//     database.transaction((tx) => {
-//       tx.executeSql(
-//         `SELECT * FROM expenses`,
-//         [],
-//         (_, result) => {
-//           const data = result.rows._array;
-//           resolve(data);
-//         },
-//         (_, error) => {
-//           reject(error);
-//         }
-//       );
-//     });
-//   });
-
-//   return promise;
-// };
-
-// export const fetchAllIncome = () => {
-//   const promise = new Promise((resolve, reject) => {
-//     database.transaction((tx) => {
-//       tx.executeSql(
-//         `
-//           SELECT * FROM income
-//         `,
-//         [],
-//         (_, result) => {
-//           const data = result.rows._array;
-//           resolve(data);
-//         },
-//         (_, error) => {
-//           reject(error);
-//         }
-//       );
-//     });
-//   });
-
-//   return promise;
-// };
-
 export const deleteAllExpenses = () => {
   const promise = new Promise((resolve, reject) => {
     database.transaction((tx) => {
@@ -329,72 +331,6 @@ export const deleteAllExpenses = () => {
         [],
         (_, result) => {
           resolve(result);
-        },
-        (_, error) => {
-          reject(error);
-        }
-      );
-    });
-  });
-
-  return promise;
-};
-
-// export const insertNewAccountInDb = (accountObject) => {
-//   const promise = new Promise((resolve, reject) => {
-//     database.transaction((tx) => {
-//       const { id, value } = accountObject;
-
-//       tx.executeSql(
-//         `
-//           INSERT INTO account VALUES (?, ?)
-//         `,
-//         [id, value],
-//         () => {
-//           resolve();
-//         },
-//         (_, error) => {
-//           reject(error);
-//         }
-//       );
-//     });
-//   });
-
-//   return promise;
-// };
-
-export const fetchAccountsFromDb = () => {
-  const promise = new Promise((resolve, reject) => {
-    database.transaction((tx) => {
-      tx.executeSql(
-        `SELECT * FROM account`,
-        [],
-        (_, result) => {
-          const data = result.rows._array;
-          resolve(data);
-        },
-        (_, error) => {
-          reject(error);
-        }
-      );
-    });
-  });
-
-  return promise;
-};
-
-export const updateCategoryInDb = (categoryObject) => {
-  const { id, value, table } = categoryObject;
-
-  const promise = new Promise((resolve, reject) => {
-    const sql = `UPDATE ${table} SET value = ? WHERE id = ?`;
-
-    database.transaction((tx) => {
-      tx.executeSql(
-        sql,
-        [value, id],
-        () => {
-          resolve();
         },
         (_, error) => {
           reject(error);

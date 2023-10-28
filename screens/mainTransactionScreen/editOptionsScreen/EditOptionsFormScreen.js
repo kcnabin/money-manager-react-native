@@ -13,8 +13,15 @@ import {
   updateAccount,
 } from "../../../features/account/accountSlice";
 
-import { addExpensesCategory } from "../../../features/expensesCategory/expensesCategorySlice";
-import { addIncomeCategory } from "../../../features/incomeCategory/incomeCategorySlice";
+import {
+  addExpensesCategory,
+  updateExpensesCategory,
+} from "../../../features/expensesCategory/expensesCategorySlice";
+
+import {
+  addIncomeCategory,
+  updateIncomeCategory,
+} from "../../../features/incomeCategory/incomeCategorySlice";
 
 const EditOptionsFormScreen = ({ route, navigation }) => {
   const { optionType } = route.params;
@@ -88,11 +95,27 @@ const EditOptionsFormScreen = ({ route, navigation }) => {
       id: route.params.option.id,
     };
 
-    try {
-      updateCategoryInDb({ ...categoryObject, table: optionType });
+    const table =
+      optionType === "account"
+        ? "account"
+        : optionType === "income"
+        ? "incomeCategory"
+        : "expensesCategory";
+
+    const updateCategory = async () => {
+      await updateCategoryInDb(categoryObject, table);
+
       if (optionType === "account") {
         dispatch(updateAccount(categoryObject));
+      } else if (optionType === "income") {
+        dispatch(updateIncomeCategory(categoryObject));
+      } else if (optionType === "expenses") {
+        dispatch(updateExpensesCategory(categoryObject));
       }
+    };
+
+    try {
+      updateCategory();
     } catch (error) {
       Alert.alert("Error updating account!");
     }

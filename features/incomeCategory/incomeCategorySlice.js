@@ -33,12 +33,25 @@ const incomeCategorySlice = createSlice({
 
       return state;
     },
-    editIncomeCategory: (state, action) => {
-      return state.map((incomeCategory) =>
-        incomeCategory.id !== action.payload.id
-          ? incomeCategory
-          : { id: action.payload.id, value: action.payload.newValue }
-      );
+    updateIncomeCategory: (state, action) => {
+      const { id, value } = action.payload;
+
+      if (!!id && !!value) {
+        return state.map((incomeCategory) =>
+          incomeCategory.id !== id ? incomeCategory : { id, value }
+        );
+      }
+
+      return state;
+    },
+    deleteIncomeCategory: (state, action) => {
+      const { id } = action.payload;
+
+      if (id) {
+        return state.filter((incomeCategory) => incomeCategory.id !== id);
+      }
+
+      return state;
     },
   },
 });
@@ -47,5 +60,6 @@ export default incomeCategorySlice.reducer;
 export const {
   initIncomeCategoryFromDb,
   addIncomeCategory,
-  editIncomeCategory,
+  updateIncomeCategory,
+  deleteIncomeCategory,
 } = incomeCategorySlice.actions;

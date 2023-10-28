@@ -1,4 +1,4 @@
-import { FlatList } from "react-native-gesture-handler";
+import { FlatList } from "react-native";
 import EachOption from "./EachOption";
 
 const DisplayOptions = ({ data, selectOptions }) => {
@@ -8,7 +8,7 @@ const DisplayOptions = ({ data, selectOptions }) => {
       renderItem={({ item }) => (
         <EachOption item={item} selectOptions={selectOptions} />
       )}
-      keyExtractor={(item) => item.id}
+      keyExtractor={(item) => item.id || Math.random()}
       numColumns={3}
     />
   );

@@ -1,13 +1,54 @@
 import { View, Text, StyleSheet, Pressable, Alert } from "react-native";
+import { useDispatch } from "react-redux";
+import { useNavigation } from "@react-navigation/native";
+
+import { deleteCategoryFromDb } from "../../../util/database";
+import { deleteAccount } from "../../../features/account/accountSlice";
+import { deleteExpensesCategory } from "../../../features/expensesCategory/expensesCategorySlice";
+import { deleteIncomeCategory } from "../../../features/incomeCategory/incomeCategorySlice";
+
 import { MaterialIcons } from "@expo/vector-icons";
 import { allColors } from "../../../Colors";
-import { useNavigation } from "@react-navigation/native";
 
 const EachOption = ({ option, optionType }) => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   const handleOptionDelete = () => {
-    Alert.alert(JSON.stringify(option));
+    const deleteCategory = async () => {
+      id = option.id;
+      const table =
+        optionType === "account"
+          ? "account"
+          : optionType === "income"
+          ? "incomeCategory"
+          : "expensesCategory";
+
+      await deleteCategoryFromDb(table, id);
+
+      if (optionType === "account") {
+        dispatch(deleteAccount({ id }));
+      } else if (optionType === "income") {
+        dispatch(deleteIncomeCategory({ id }));
+      } else if (optionType === "expenses") {
+        dispatch(deleteExpensesCategory({ id }));
+      }
+    };
+
+    Alert.alert(
+      `Are you sure that you want to delete '${option.value}' ? `,
+      "",
+      [
+        {
+          text: "Cancel",
+          onPress: () => {},
+        },
+        {
+          text: "Delete",
+          onPress: deleteCategory,
+        },
+      ]
+    );
   };
 
   return (

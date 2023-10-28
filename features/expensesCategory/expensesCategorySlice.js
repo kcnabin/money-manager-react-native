@@ -31,15 +31,25 @@ const expensesCategorySlice = createSlice({
       }
       return state;
     },
-    editExpensesCategory: (state, action) => {
-      return state.map((expensesCategory) =>
-        expensesCategory.id !== action.payload.id
-          ? expensesCategory
-          : {
-              id: action.payload.id,
-              value: action.payload.newValue,
-            }
-      );
+    updateExpensesCategory: (state, action) => {
+      const { id, value } = action.payload;
+
+      if (!!id && !!value) {
+        return state.map((expensesCategory) =>
+          expensesCategory.id !== id ? expensesCategory : { id, value }
+        );
+      }
+
+      return state;
+    },
+    deleteExpensesCategory: (state, action) => {
+      const { id } = action.payload;
+
+      if (id) {
+        return state.map((expensesCategory) => expensesCategory.id !== id);
+      }
+
+      return state;
     },
   },
 });
@@ -48,5 +58,6 @@ export default expensesCategorySlice.reducer;
 export const {
   initExpensesCategoryFromDb,
   addExpensesCategory,
-  editExpensesCategory,
+  updateExpensesCategory,
+  deleteExpensesCategory,
 } = expensesCategorySlice.actions;

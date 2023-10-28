@@ -27,15 +27,28 @@ const accountSlice = createSlice({
       return state;
     },
     updateAccount: (state, action) => {
-      return state.map((account) =>
-        account.id !== action.payload.id
-          ? account
-          : { id: action.payload.id, value: action.payload.value }
-      );
+      const { id, value } = action.payload;
+
+      if (!!id && !!value) {
+        return state.map((account) =>
+          account.id !== id ? account : { id, value }
+        );
+      }
+
+      return state;
+    },
+    deleteAccount: (state, action) => {
+      const { id } = action.payload;
+
+      if (id) {
+        return state.filter((account) => account.id !== id);
+      }
+
+      return state;
     },
   },
 });
 
 export default accountSlice.reducer;
-export const { initAccountFromDb, addAccount, updateAccount } =
+export const { initAccountFromDb, addAccount, updateAccount, deleteAccount } =
   accountSlice.actions;

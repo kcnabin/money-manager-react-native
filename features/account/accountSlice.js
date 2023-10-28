@@ -21,7 +21,10 @@ const accountSlice = createSlice({
     addAccount: (state, action) => {
       const { id, value } = action.payload;
 
-      return [...state, { id, value }];
+      if (!!id && !!value) {
+        return [...state, { id, value }];
+      }
+      return state;
     },
     updateAccount: (state, action) => {
       return state.map((account) =>

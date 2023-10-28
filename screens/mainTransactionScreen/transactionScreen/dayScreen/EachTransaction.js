@@ -25,7 +25,7 @@ const EachTransaction = ({ transaction }) => {
       onPress={() => navigation.navigate("AddIncomeExpenses", { transaction })}
     >
       <View style={style.category}>
-        <Text>{transactionCategory.value}</Text>
+        <Text>{transactionCategory?.value}</Text>
         {/* <Text>{transaction?.category.substring(0, 10)}...</Text> */}
       </View>
 

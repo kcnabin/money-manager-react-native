@@ -1,18 +1,21 @@
 import { createStackNavigator } from "@react-navigation/stack";
-
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
-import { initExpensesFromDb } from "../features/expenses/expensesSlice";
-import { initIncomeFromDb } from "../features/income/incomeSlice";
+import { useFonts } from "expo-font";
+import AppLoading from "expo-app-loading";
+
+import { initAccountFromDb } from "../features/account/accountSlice";
+import { initExpensesCategoryFromDb } from "../features/expensesCategory/expensesCategorySlice";
+import { initIncomeCategoryFromDb } from "../features/incomeCategory/incomeCategorySlice";
 
 import {
-  initializeExpensesTable,
-  fetchAllExpenses,
-  initializeIncomeTable,
-  fetchAllIncome,
+  fetchAllFromDb,
   initializeAccountTable,
-  fetchAccountsFromDb,
+  initializeExpensesCategoryTable,
+  initializeExpensesTable,
+  initializeIncomeCategoryTable,
+  initializeIncomeTable,
 } from "../util/database";
 
 import TransactionScreen from "./mainTransactionScreen/TransactionScreen";
@@ -20,10 +23,6 @@ import EditOptionsScreen from "./mainTransactionScreen/EditOptionsScreen";
 import EditOptionsFormScreen from "./mainTransactionScreen/editOptionsScreen/EditOptionsFormScreen";
 import SearchScreen from "./mainTransactionScreen/SearchScreen";
 import AddIncomeExpensesScreen from "./mainTransactionScreen/AddIncomeExpensesScreen";
-
-import { useFonts } from "expo-font";
-import AppLoading from "expo-app-loading";
-import { initAccountFromDb } from "../features/account/accountSlice";
 
 const Stack = createStackNavigator();
 
@@ -39,33 +38,36 @@ const MainTransactionScreen = () => {
 
   useEffect(() => {
     const initializeDatabase = async () => {
+      await initializeAccountTable();
+      await initializeExpensesCategoryTable();
+      await initializeIncomeCategoryTable();
       await initializeExpensesTable();
       await initializeIncomeTable();
-      await initializeAccountTable();
+    };
+
+    const fetchInitialData = async () => {
+      const accounts = await fetchAllFromDb("account");
+      dispatch(initAccountFromDb(accounts));
+
+      const expensesCategory = await fetchAllFromDb("expensesCategory");
+      dispatch(initExpensesCategoryFromDb(expensesCategory));
+
+      const incomeCategory = await fetchAllFromDb("incomeCategory");
+      dispatch(initIncomeCategoryFromDb(incomeCategory));
+
+      const income = await fetchAllFromDb("income");
+
+      const expenses = await fetchAllFromDb("expenses");
     };
 
     try {
       initializeDatabase();
-    } catch (error) {
-      console.log(error);
-    } finally {
-    }
-
-    const fetchInitialData = async () => {
-      const expenses = await fetchAllExpenses();
-      dispatch(initExpensesFromDb(expenses));
-
-      const account = await fetchAccountsFromDb();
-      dispatch(initAccountFromDb(account));
-    };
-
-    try {
       fetchInitialData();
     } catch (error) {
       console.log(error);
+    } finally {
+      setDatabaseInitializing(false);
     }
-
-    setDatabaseInitializing(false);
   }, []);
 
   if (!fontsLoaded || databaseInitializing) {

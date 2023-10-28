@@ -1,28 +1,38 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = [
-  {
-    id: "default-income-id-salary",
-    value: "Salary",
-  },
-  {
-    id: "default-income-id-allowances",
-    value: "Allowances",
-  },
-  {
-    id: "default-income-id-others",
-    value: "Others",
-  },
-  {
-    id: "default-income-id-bonus",
-    value: "Bonus",
-  },
+  // {
+  //   id: "default-income-id-salary",
+  //   value: "Salary",
+  // },
 ];
 
 const incomeCategorySlice = createSlice({
   name: "incomeCategory",
   initialState,
   reducers: {
+    initIncomeCategoryFromDb: (state, action) => {
+      let category = [];
+
+      for (eachElement of action.payload) {
+        const { id, value } = eachElement;
+
+        if (!!id && !!value) {
+          category = [...category, { id, value }];
+        }
+      }
+
+      return category;
+    },
+    addIncomeCategory: (state, action) => {
+      const { id, value } = action.payload;
+
+      if (!!id && !!value) {
+        return [...state, { id, value }];
+      }
+
+      return state;
+    },
     editIncomeCategory: (state, action) => {
       return state.map((incomeCategory) =>
         incomeCategory.id !== action.payload.id
@@ -34,4 +44,8 @@ const incomeCategorySlice = createSlice({
 });
 
 export default incomeCategorySlice.reducer;
-export const { editIncomeCategory } = incomeCategorySlice.actions;
+export const {
+  initIncomeCategoryFromDb,
+  addIncomeCategory,
+  editIncomeCategory,
+} = incomeCategorySlice.actions;

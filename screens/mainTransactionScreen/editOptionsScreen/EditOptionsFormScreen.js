@@ -4,13 +4,17 @@ import { useDispatch } from "react-redux";
 import uuid from "react-native-uuid";
 
 import {
-  insertNewAccountInDb,
+  insertNewCategoryInDb,
   updateCategoryInDb,
 } from "../../../util/database";
+
 import {
   addAccount,
   updateAccount,
 } from "../../../features/account/accountSlice";
+
+import { addExpensesCategory } from "../../../features/expensesCategory/expensesCategorySlice";
+import { addIncomeCategory } from "../../../features/incomeCategory/incomeCategorySlice";
 
 const EditOptionsFormScreen = ({ route, navigation }) => {
   const { optionType } = route.params;
@@ -32,7 +36,7 @@ const EditOptionsFormScreen = ({ route, navigation }) => {
     }
   }, []);
 
-  const handleOptionSave = () => {
+  const handleOptionSave = async () => {
     if (!text) {
       Alert.alert("Category can't be empty!");
       return;
@@ -43,10 +47,28 @@ const EditOptionsFormScreen = ({ route, navigation }) => {
       id: uuid.v4(),
     };
 
+    const addNewAccount = async () => {
+      await insertNewCategoryInDb("account", categoryObject);
+      dispatch(addAccount(categoryObject));
+    };
+
+    const addNewExpensesCategory = async () => {
+      await insertNewCategoryInDb("expensesCategory", categoryObject);
+      dispatch(addExpensesCategory(categoryObject));
+    };
+
+    const addNewIncomeCategory = async () => {
+      await insertNewCategoryInDb("incomeCategory", categoryObject);
+      dispatch(addIncomeCategory(categoryObject));
+    };
+
     try {
       if (optionType === "account") {
-        insertNewAccountInDb(categoryObject);
-        dispatch(addAccount(categoryObject));
+        addNewAccount();
+      } else if (optionType === "income") {
+        addNewIncomeCategory();
+      } else if (optionType === "expenses") {
+        addNewExpensesCategory();
       }
     } catch (error) {
       Alert.alert("Error adding new Account...");

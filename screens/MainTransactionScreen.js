@@ -1,6 +1,6 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { useFonts } from "expo-font";
 import AppLoading from "expo-app-loading";
@@ -27,6 +27,8 @@ import AddIncomeExpensesScreen from "./mainTransactionScreen/AddIncomeExpensesSc
 const Stack = createStackNavigator();
 
 const MainTransactionScreen = () => {
+  const [databaseInitializing, setDatabaseInitializing] = useState(true);
+
   const [fontsLoaded] = useFonts({
     witcher: require("../assets/fonts/Witcher.ttf"),
     main: require("../assets/fonts/OpenSans.ttf"),
@@ -34,7 +36,6 @@ const MainTransactionScreen = () => {
   });
 
   const dispatch = useDispatch();
-  const [databaseInitializing, setDatabaseInitializing] = useState(true);
 
   useEffect(() => {
     const initializeDatabase = async () => {
@@ -54,10 +55,6 @@ const MainTransactionScreen = () => {
 
       const incomeCategory = await fetchAllFromDb("incomeCategory");
       dispatch(initIncomeCategoryFromDb(incomeCategory));
-
-      const income = await fetchAllFromDb("income");
-
-      const expenses = await fetchAllFromDb("expenses");
     };
 
     try {

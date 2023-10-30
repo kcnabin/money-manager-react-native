@@ -9,8 +9,9 @@ import { displaySelectedMonthAndYear } from "../../helper/dateHelper";
 import { MaterialIcons } from "@expo/vector-icons";
 
 const SelectedMonthAndYear = () => {
-  const selectedMonth = useSelector((state) => state.selectedMonth);
   const dispatch = useDispatch();
+
+  const selectedMonth = useSelector((state) => state.selectedMonth);
 
   const handleMonthDecrement = () => {
     dispatch(decreaseOneMonth());

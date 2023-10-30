@@ -2,27 +2,27 @@ import { View, Text, StyleSheet } from "react-native";
 import { mainStyle } from "../../../../mainStyle";
 import { allColors } from "../../../../Colors";
 
-const DailySummary = ({ dailyIncome, dailyExpenses, dailyTotal }) => {
+const DailySummary = ({ totalIncome, totalExpenses }) => {
   return (
     <View style={style.dailySummary}>
       <View style={style.eachTransaction}>
         <Text style={style.eachTransactionTitle}>Income</Text>
         <Text style={[style.eachTransactionValue, mainStyle.incomeColor]}>
-          {dailyIncome.toLocaleString()}
+          {totalIncome.toLocaleString()}
         </Text>
       </View>
 
       <View style={style.eachTransaction}>
         <Text style={style.eachTransactionTitle}>Expenses</Text>
         <Text style={[style.eachTransactionValue, mainStyle.expensesColor]}>
-          {dailyExpenses.toLocaleString()}
+          {totalExpenses.toLocaleString()}
         </Text>
       </View>
 
       <View style={style.eachTransaction}>
         <Text style={style.eachTransactionTitle}>Total</Text>
         <Text style={[style.eachTransactionValue]}>
-          {dailyTotal.toLocaleString()}
+          {(totalIncome - totalExpenses).toLocaleString()}
         </Text>
       </View>
     </View>

@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet } from "react-native";
+import { ScrollView, StyleSheet, View, Text } from "react-native";
 import EachDayTransaction from "./EachDayTransaction";
 import { allColors } from "../../../../Colors";
 
@@ -48,6 +48,19 @@ const AllTransactions = ({ transactions }) => {
     .filter((eachDay) => eachDay.length > 0)
     .reverse();
 
+  if (transactions.length === 0) {
+    return (
+      <View style={style.container}>
+        <View style={[style.container, style.center]}>
+          <View>
+            <Text style={style.text}>No transactions found! </Text>
+            <Text style={style.text}>Why don't you add some records? </Text>
+          </View>
+        </View>
+      </View>
+    );
+  }
+
   return (
     <ScrollView style={style.container}>
       {dayArrayWithTransaction.map((eachDayTransactions, i) => (
@@ -63,5 +76,13 @@ const style = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: allColors.lightGray,
+  },
+  center: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  text: {
+    fontSize: 20,
+    textAlign: "center",
   },
 });

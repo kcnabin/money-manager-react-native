@@ -134,7 +134,7 @@ export const initializeExpensesTable = () => {
 };
 
 // fetching data
-export const fetchAllFromDb = (table, dateObject, dateRange) => {
+export const fetchAllFromDb = (table) => {
   let sql = ``;
 
   if (table === "account") {
@@ -157,6 +157,84 @@ export const fetchAllFromDb = (table, dateObject, dateRange) => {
         (_, result) => {
           const data = result.rows._array;
           resolve(data);
+        },
+        (_, error) => {
+          reject(error);
+        }
+      );
+    });
+  });
+
+  return promise;
+};
+
+export const getAllMonthlyTransactionsFromDb = (table, dateObject) => {
+  let sql = ``;
+
+  if (table === "income" || table === "expenses") {
+    const { year, month } = dateObject;
+
+    if (!year || !month) {
+      return;
+    }
+
+    let condition = `${year}-${month}-%`;
+    if (month < 10) {
+      condition = `${year}-0${month}-%`;
+    }
+
+    sql = `SELECT * from ${table} WHERE date LIKE '${condition}'`;
+  }
+
+  const promise = new Promise((resolve, reject) => {
+    database.transaction((tx) => {
+      tx.executeSql(
+        sql,
+        [],
+        (_, result) => {
+          const data = result.rows._array;
+          resolve(data);
+        },
+        (_, error) => {
+          reject(error);
+        }
+      );
+    });
+  });
+
+  return promise;
+};
+
+export const getMonthlyTotalFromDb = (table, dateObject) => {
+  let sql = ``;
+
+  if (table === "income" || table === "expenses") {
+    const { year, month } = dateObject;
+
+    if (!year || !month) {
+      return;
+    }
+
+    let condition = `${year}-${month}-%`;
+    if (month < 10) {
+      condition = `${year}-0${month}-%`;
+    }
+
+    sql = `SELECT SUM(amount) from ${table} WHERE date LIKE '${condition}'`;
+  }
+
+  const promise = new Promise((resolve, reject) => {
+    database.transaction((tx) => {
+      tx.executeSql(
+        sql,
+        [],
+        (_, result) => {
+          const data = result.rows._array[0]["SUM(amount)"];
+          if (!data) {
+            resolve(0);
+          } else {
+            resolve(data);
+          }
         },
         (_, error) => {
           reject(error);
@@ -251,7 +329,7 @@ export const insertNewTransactionInDb = (transaction, table = "expenses") => {
       const sql = `
         INSERT INTO ${table} 
         (id, amount, date, note, type, account, category)
-        VALUES (?, ?, ?, ?, ?, ?, ?)
+        VALUES (?, ?, datetime(?), ?, ?, ?, ?)
       `;
 
       tx.executeSql(

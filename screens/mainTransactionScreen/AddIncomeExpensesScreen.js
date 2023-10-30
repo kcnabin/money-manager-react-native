@@ -2,19 +2,6 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import {
-  addIncome,
-  deleteIncome,
-  updateIncome,
-} from "../../features/income/incomeSlice";
-import uuid from "react-native-uuid";
-
-import {
-  addExpenses,
-  deleteExpenses,
-  updateExpenses,
-} from "../../features/expenses/expensesSlice";
-
-import {
   View,
   Text,
   TextInput,
@@ -23,6 +10,25 @@ import {
   Pressable,
   Alert,
 } from "react-native";
+import uuid from "react-native-uuid";
+
+import {
+  insertNewTransactionInDb,
+  updateTransactionInDb,
+  deleteTransactionFromDb,
+} from "../../util/database";
+
+import {
+  addIncome,
+  deleteIncome,
+  updateIncome,
+} from "../../features/income/incomeSlice";
+
+import {
+  addExpenses,
+  deleteExpenses,
+  updateExpenses,
+} from "../../features/expenses/expensesSlice";
 
 import DateTimePicker from "@react-native-community/datetimepicker";
 import OptionSelector from "./addIncomeExpensesScreen/OptionSelector";
@@ -31,11 +37,7 @@ import AccountPicker from "./addIncomeExpensesScreen/AccountPicker";
 
 import { mainStyle } from "../../mainStyle";
 import { allColors } from "../../Colors";
-import {
-  insertNewTransactionInDb,
-  updateTransactionInDb,
-  deleteTransactionFromDb,
-} from "../../util/database";
+import { areMonthsEqual } from "../../helper/dateHelper";
 
 const AddIncomeExpensesScreen = ({ route }) => {
   const navigation = useNavigation();
@@ -56,6 +58,12 @@ const AddIncomeExpensesScreen = ({ route }) => {
   const allAccount = useSelector((state) => state.account);
   const incomeCategory = useSelector((state) => state.incomeCategory);
   const expensesCategory = useSelector((state) => state.expensesCategory);
+
+  const selectedMonth = useSelector((state) => state.selectedMonth);
+  const transactionMonth = {
+    year: date.getFullYear(),
+    month: date.getMonth() + 1,
+  };
 
   useEffect(() => {
     if (route.params) {
@@ -106,7 +114,7 @@ const AddIncomeExpensesScreen = ({ route }) => {
       type: transactionType,
       account: account.id,
       category: category.id,
-      date: date.toString(),
+      date: date.toISOString(),
       amount: Number(amount),
       note,
       id: route?.params?.transaction?.id || uuid.v4(),
@@ -116,12 +124,14 @@ const AddIncomeExpensesScreen = ({ route }) => {
       if (route.params) {
         try {
           await updateTransactionInDb(transactionObject, "income");
-          dispatch(
-            updateIncome({
-              id: route.params.transaction.id,
-              updatedObject: transactionObject,
-            })
-          );
+          if (areMonthsEqual(selectedMonth, transactionMonth)) {
+            dispatch(
+              updateIncome({
+                id: route.params.transaction.id,
+                updatedObject: transactionObject,
+              })
+            );
+          }
         } catch (error) {
           Alert.alert("Error updating income...");
           console.log(error);
@@ -129,7 +139,9 @@ const AddIncomeExpensesScreen = ({ route }) => {
       } else {
         try {
           await insertNewTransactionInDb(transactionObject, "income");
-          dispatch(addIncome(transactionObject));
+          if (areMonthsEqual(selectedMonth, transactionMonth)) {
+            dispatch(addIncome(transactionObject));
+          }
         } catch (error) {
           Alert.alert("Error adding new income...");
           console.log(error);
@@ -139,12 +151,14 @@ const AddIncomeExpensesScreen = ({ route }) => {
       if (route.params) {
         try {
           await updateTransactionInDb(transactionObject, "expenses");
-          dispatch(
-            updateExpenses({
-              id: route.params.transaction.id,
-              updatedObject: transactionObject,
-            })
-          );
+          if (areMonthsEqual(selectedMonth, transactionMonth)) {
+            dispatch(
+              updateExpenses({
+                id: route.params.transaction.id,
+                updatedObject: transactionObject,
+              })
+            );
+          }
         } catch (error) {
           Alert.alert("Error updating expense!");
           console.log(error);
@@ -152,7 +166,9 @@ const AddIncomeExpensesScreen = ({ route }) => {
       } else {
         try {
           await insertNewTransactionInDb(transactionObject, "expenses");
-          dispatch(addExpenses(transactionObject));
+          if (areMonthsEqual(selectedMonth, transactionMonth)) {
+            dispatch(addExpenses(transactionObject));
+          }
         } catch (error) {
           Alert.alert("Error adding new expense...");
           console.log(error);

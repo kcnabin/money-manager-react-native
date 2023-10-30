@@ -9,13 +9,11 @@ export const getMonth = (date = new Date()) => {
 };
 
 export const areMonthsEqual = (month1, month2) => {
-  if (month1.year === month2.year && month1.month === month2.month) {
-    return true;
-  }
-  return false;
+  return month1.year === month2.year && month1.month === month2.month;
 };
 
 const shortMonths = [
+  "",
   "Jan",
   "Feb",
   "Mar",

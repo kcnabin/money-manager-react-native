@@ -5,9 +5,7 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import CalendarTab from "./transactionScreen/CalendarScreen";
 import DayTab from "./transactionScreen/DayScreen";
 import MonthTab from "./transactionScreen/MonthScreen";
-import YearTab from "./transactionScreen/YearScreen";
 
-import { allColors } from "../../Colors";
 import SelectedMonthAndYear from "../components/SelectedMonthAndYear";
 import { MaterialIcons } from "@expo/vector-icons";
 import CircularAddIcon from "../../components/CircularAddIcon";
@@ -45,12 +43,6 @@ const TransactionScreen = ({ navigation }) => {
             name="MonthTab"
             component={MonthTab}
             options={{ title: "Month" }}
-          />
-
-          <TopTab.Screen
-            name="YearTab"
-            component={YearTab}
-            options={{ title: "Year" }}
           />
 
           <TopTab.Screen

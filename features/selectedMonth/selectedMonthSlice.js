@@ -39,9 +39,20 @@ const selectedMonthSlice = createSlice({
         month: 1,
       };
     },
+    setSelectedMonth: (state, action) => {
+      const { year, month } = action.payload;
+
+      if (!year || !month) {
+        return state;
+      }
+      return {
+        year,
+        month,
+      };
+    },
   },
 });
 
 export default selectedMonthSlice.reducer;
-export const { decreaseOneMonth, increaseOneMonth } =
+export const { decreaseOneMonth, increaseOneMonth, setSelectedMonth } =
   selectedMonthSlice.actions;

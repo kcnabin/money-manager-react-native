@@ -1,12 +1,121 @@
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import { mainStyle } from "../../../mainStyle";
+import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { getMonthlyTotalFromDb } from "../../../util/database";
+import { ScrollView } from "react-native-gesture-handler";
+import { allColors } from "../../../Colors";
 
 const MonthTab = () => {
+  const selectedMonth = useSelector((state) => state.selectedMonth);
+  const [monthlyRecord, setMonthlyRecord] = useState([]);
+
+  useEffect(() => {
+    let year = selectedMonth.year;
+    let month = selectedMonth.month;
+
+    const getTotal = async (year, month) => {
+      const income = await getMonthlyTotalFromDb("income", { year, month });
+      const expenses = await getMonthlyTotalFromDb("expenses", { year, month });
+
+      const monthlyIncomeExpenses = {
+        income,
+        expenses,
+        year,
+        month,
+      };
+      setMonthlyRecord((prevRecord) => [...prevRecord, monthlyIncomeExpenses]);
+    };
+
+    for (let i = 0; i < 12; i++) {
+      getTotal(year, month);
+
+      month = month - 1;
+
+      if (month === 0) {
+        month = 12;
+        year = year - 1;
+      }
+    }
+  }, [selectedMonth]);
+
+  if (monthlyRecord.length < 12) {
+    return (
+      <View style={style.container}>
+        <View style={style.center}>
+          <Text style={style.font24}>Fetching data...</Text>
+        </View>
+      </View>
+    );
+  }
+
   return (
-    <View style={mainStyle.fullArea}>
-      <Text style={mainStyle.bigFont}>MonthTab</Text>
-    </View>
+    <ScrollView style={style.container}>
+      <View style={style.monthlyRecordsContainer}>
+        {monthlyRecord.map((eachRecord, i) => (
+          <View key={i} style={style.eachMonth}>
+            <View style={style.eachValue}>
+              <Text
+                style={[style.text, style.dateText]}
+              >{`${eachRecord.year}-${eachRecord.month}`}</Text>
+            </View>
+            <View style={style.eachValue}>
+              <Text style={[style.text, style.incomeText]}>
+                {eachRecord.income.toLocaleString()}
+              </Text>
+            </View>
+            <View style={style.eachValue}>
+              <Text style={[style.text, style.expensesText]}>
+                {eachRecord.expenses.toLocaleString()}
+              </Text>
+            </View>
+          </View>
+        ))}
+      </View>
+    </ScrollView>
   );
 };
 
 export default MonthTab;
+
+const style = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  monthlyRecordsContainer: {
+    marginVertical: 12,
+  },
+
+  center: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  font24: {
+    fontSize: 24,
+  },
+  eachMonth: {
+    flexDirection: "row",
+    borderBottomColor: allColors.lightGray,
+    borderBottomWidth: 1,
+    paddingHorizontal: 24,
+  },
+  eachValue: {
+    flex: 1,
+    paddingVertical: 12,
+  },
+  text: {
+    fontSize: 16,
+  },
+  dateText: {
+    fontWeight: "bold",
+  },
+  incomeText: {
+    color: allColors.incomeColor,
+    textAlign: "right",
+  },
+  expensesText: {
+    color: allColors.expensesColor,
+    textAlign: "right",
+  },
+});

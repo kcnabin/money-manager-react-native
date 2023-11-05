@@ -110,6 +110,10 @@ const AddIncomeExpensesScreen = ({ route }) => {
       return Alert.alert("Kindly enter transaction amount!");
     }
 
+    if (!note) {
+      return Alert.alert("Kindly enter note about transaction!");
+    }
+
     const transactionObject = {
       type: transactionType,
       account: account.id,
@@ -120,63 +124,61 @@ const AddIncomeExpensesScreen = ({ route }) => {
       id: route?.params?.transaction?.id || uuid.v4(),
     };
 
-    if (transactionType === "income") {
-      if (route.params) {
-        try {
-          await updateTransactionInDb(transactionObject, "income");
-          if (areMonthsEqual(selectedMonth, transactionMonth)) {
-            dispatch(
-              updateIncome({
-                id: route.params.transaction.id,
-                updatedObject: transactionObject,
-              })
-            );
-          }
-        } catch (error) {
-          Alert.alert("Error updating income...");
-          console.log(error);
-        }
-      } else {
-        try {
-          await insertNewTransactionInDb(transactionObject, "income");
-          if (areMonthsEqual(selectedMonth, transactionMonth)) {
-            dispatch(addIncome(transactionObject));
-          }
-        } catch (error) {
-          Alert.alert("Error adding new income...");
-          console.log(error);
-        }
-      }
-    } else if (transactionType === "expenses") {
-      if (route.params) {
-        try {
-          await updateTransactionInDb(transactionObject, "expenses");
-          if (areMonthsEqual(selectedMonth, transactionMonth)) {
-            dispatch(
-              updateExpenses({
-                id: route.params.transaction.id,
-                updatedObject: transactionObject,
-              })
-            );
-          }
-        } catch (error) {
-          Alert.alert("Error updating expense!");
-          console.log(error);
-        }
-      } else {
-        try {
-          await insertNewTransactionInDb(transactionObject, "expenses");
-          if (areMonthsEqual(selectedMonth, transactionMonth)) {
-            dispatch(addExpenses(transactionObject));
-          }
-        } catch (error) {
-          Alert.alert("Error adding new expense...");
-          console.log(error);
-        }
-      }
+    if (route.params) {
+      updateTransaction(transactionObject);
+    } else {
+      addNewTransaction(transactionObject);
     }
 
     navigation.navigate("AllTransactions");
+  };
+
+  const addNewTransaction = async (transactionObject) => {
+    try {
+      if (transactionType === "income") {
+        await insertNewTransactionInDb(transactionObject, "income");
+        if (areMonthsEqual(selectedMonth, transactionMonth)) {
+          dispatch(addIncome(transactionObject));
+        }
+      } else if (transactionType === "expenses") {
+        await insertNewTransactionInDb(transactionObject, "expenses");
+        if (areMonthsEqual(selectedMonth, transactionMonth)) {
+          dispatch(addExpenses(transactionObject));
+        }
+      }
+    } catch (error) {
+      Alert.alert("Error adding new transaction...");
+      console.log(error);
+    }
+  };
+
+  const updateTransaction = async (transactionObject) => {
+    try {
+      if (transactionType === "income") {
+        await updateTransactionInDb(transactionObject, "income");
+        if (areMonthsEqual(selectedMonth, transactionMonth)) {
+          dispatch(
+            updateIncome({
+              id: route.params.transaction.id,
+              updatedObject: transactionObject,
+            })
+          );
+        }
+      } else if (transactionType === "expenses") {
+        await updateTransactionInDb(transactionObject, "expenses");
+        if (areMonthsEqual(selectedMonth, transactionMonth)) {
+          dispatch(
+            updateExpenses({
+              id: route.params.transaction.id,
+              updatedObject: transactionObject,
+            })
+          );
+        }
+      }
+    } catch (error) {
+      Alert.alert("Error updating transaction...");
+      console.log(error);
+    }
   };
 
   const handleDelete = (id, note) => {

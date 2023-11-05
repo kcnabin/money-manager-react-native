@@ -6,25 +6,86 @@ const expensesSlice = createSlice({
   name: "expensesSlice",
   initialState,
   reducers: {
-    addExpenses: (state, action) => {
-      return [...state, action.payload];
-    },
-    updateExpenses: (state, action) => {
-      return state.map((expense) => {
-        if (expense.id !== action.payload.id) {
-          return expense;
-        }
-        return {
-          ...expense,
-          ...action.payload.updatedObject,
-        };
-      });
-    },
     initExpensesFromDb: (state, action) => {
-      return action.payload;
+      let expenses = [];
+
+      for (eachExpense of action.payload) {
+        const { id, type, account, category, date, amount, note } = eachExpense;
+
+        if (
+          !!id &&
+          !!type &&
+          !!account &&
+          !!category &&
+          !!date &&
+          !!amount &&
+          !!note
+        ) {
+          expenses = [
+            ...expenses,
+            { id, type, account, category, date, amount, note },
+          ];
+        }
+      }
+
+      return expenses;
     },
+
+    addExpenses: (state, action) => {
+      const { id, type, account, category, date, amount, note } =
+        action.payload;
+
+      if (
+        !!id &&
+        !!type &&
+        !!account &&
+        !!category &&
+        !!date &&
+        !!amount &&
+        !!note
+      ) {
+        return [...state, { id, type, account, category, date, amount, note }];
+      }
+
+      return state;
+    },
+
+    updateExpenses: (state, action) => {
+      const { id, updatedObject } = action.payload;
+
+      if (!id || !updatedObject) {
+        return state;
+      }
+
+      const { type, account, category, date, amount, note } = updatedObject;
+
+      if (
+        !!id &&
+        !!type &&
+        !!account &&
+        !!category &&
+        !!date &&
+        !!amount &&
+        !!note
+      ) {
+        return state.map((expense) =>
+          expense.id !== id
+            ? expense
+            : { id, type, account, category, date, amount, note }
+        );
+      }
+
+      return state;
+    },
+
     deleteExpenses: (state, action) => {
-      return state.filter((expense) => expense.id !== action.payload.id);
+      const { id } = action.payload;
+
+      if (!id) {
+        return state;
+      }
+
+      return state.filter((expense) => expense.id !== id);
     },
   },
 });

@@ -24,6 +24,7 @@ const incomeCategorySlice = createSlice({
 
       return category;
     },
+
     addIncomeCategory: (state, action) => {
       const { id, value } = action.payload;
 
@@ -33,6 +34,7 @@ const incomeCategorySlice = createSlice({
 
       return state;
     },
+
     updateIncomeCategory: (state, action) => {
       const { id, value } = action.payload;
 
@@ -44,6 +46,7 @@ const incomeCategorySlice = createSlice({
 
       return state;
     },
+
     deleteIncomeCategory: (state, action) => {
       const { id } = action.payload;
 

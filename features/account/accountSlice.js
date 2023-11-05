@@ -18,6 +18,7 @@ const accountSlice = createSlice({
 
       return account;
     },
+
     addAccount: (state, action) => {
       const { id, value } = action.payload;
 
@@ -26,6 +27,7 @@ const accountSlice = createSlice({
       }
       return state;
     },
+
     updateAccount: (state, action) => {
       const { id, value } = action.payload;
 
@@ -37,6 +39,7 @@ const accountSlice = createSlice({
 
       return state;
     },
+
     deleteAccount: (state, action) => {
       const { id } = action.payload;
 

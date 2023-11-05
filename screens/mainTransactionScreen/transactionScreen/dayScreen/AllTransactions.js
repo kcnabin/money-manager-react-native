@@ -41,7 +41,7 @@ const AllTransactions = ({ transactions }) => {
 
   transactions.forEach((transaction) => {
     const date = new Date(transaction.date).getDate();
-    dayArray[date].push(transaction);
+    dayArray[date]?.push(transaction);
   });
 
   const dayArrayWithTransaction = dayArray

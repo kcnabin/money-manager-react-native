@@ -23,6 +23,7 @@ const expensesCategorySlice = createSlice({
       }
       return category;
     },
+
     addExpensesCategory: (state, action) => {
       const { id, value } = action.payload;
 
@@ -31,6 +32,7 @@ const expensesCategorySlice = createSlice({
       }
       return state;
     },
+
     updateExpensesCategory: (state, action) => {
       const { id, value } = action.payload;
 
@@ -42,6 +44,7 @@ const expensesCategorySlice = createSlice({
 
       return state;
     },
+
     deleteExpensesCategory: (state, action) => {
       const { id } = action.payload;
 

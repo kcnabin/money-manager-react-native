@@ -419,3 +419,32 @@ export const deleteAllExpenses = () => {
 
   return promise;
 };
+
+// getting category total for selected month
+export const getCategoryTotalFromDb = (table, dateObject, categoryId) => {
+  const promise = new Promise((resolve, reject) => {
+    const { month, year } = dateObject;
+    let condition1 = `${year}-${month}-%`;
+    if (month < 10) {
+      condition1 = `${year}-0${month}-%`;
+    }
+
+    const sql = `SELECT SUM(amount) FROM ${table} WHERE date LIKE '${condition1}' AND category = '${categoryId}'`;
+
+    database.transaction((tx) => {
+      tx.executeSql(
+        sql,
+        [],
+        (_, result) => {
+          const data = result.rows._array[0]["SUM(amount)"] || 0;
+          resolve(data);
+        },
+        (_, error) => {
+          reject(error);
+        }
+      );
+    });
+  });
+
+  return promise;
+};

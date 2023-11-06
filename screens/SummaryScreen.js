@@ -1,18 +1,20 @@
-import { View, Text } from "react-native";
-import { mainStyle } from "../mainStyle";
+import { View, StyleSheet } from "react-native";
+
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+
 import IncomeTab from "./summaryTabs/IncomeTab";
 import ExpensesTab from "./summaryTabs/ExpensesTab";
+
+import SelectedMonthAndYear from "./components/SelectedMonthAndYear";
 
 const TopTab = createMaterialTopTabNavigator();
 
 const SummaryScreen = () => {
   return (
-    <View style={mainStyle.fullArea}>
-      <View style={mainStyle.header}>
-        <Text style={mainStyle.headerText}>Summary Screen Header</Text>
-      </View>
-      <View style={mainStyle.fullArea}>
+    <View style={style.container}>
+      <SelectedMonthAndYear />
+
+      <View style={style.navigationContainer}>
         <TopTab.Navigator>
           <TopTab.Screen
             name="IncomeTab"
@@ -35,3 +37,12 @@ const SummaryScreen = () => {
 };
 
 export default SummaryScreen;
+
+const style = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  navigationContainer: {
+    flex: 1,
+  },
+});

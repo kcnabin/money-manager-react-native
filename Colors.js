@@ -12,3 +12,16 @@ export const allColors = {
   pillBg: "#a1a1a1",
   lightGray: "#cccccc",
 };
+
+export const PieChartColors = [
+  "#6495ed",
+  "#0000ff",
+  "#ffd700",
+  "#8a2be2",
+  "#a52a2a",
+  "#5f9ea0",
+  "#d2691e",
+  "#ff7f50",
+  "#6495ed",
+  "#00bfff",
+];

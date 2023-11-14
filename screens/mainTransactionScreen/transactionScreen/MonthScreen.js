@@ -55,14 +55,8 @@ const MonthTab = () => {
   }
 
   if (monthlyRecord.length < 12) {
-    return <AppLoading />;
-    // return (
-    //   <View style={style.container}>
-    //     <View style={style.center}>
-    //       <Text style={style.font24}>Fetching data...</Text>
-    //     </View>
-    //   </View>
-    // );
+    // return <AppLoading />;
+    return "";
   }
 
   return (

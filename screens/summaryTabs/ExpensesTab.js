@@ -49,7 +49,8 @@ const ExpensesTab = () => {
   }, [expensesCategory, selectedMonth]);
 
   if (categoryAndTotal.length < expensesCategory.length) {
-    return <AppLoading />;
+    return "";
+    // return <AppLoading />;
   }
 
   return (

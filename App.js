@@ -1,4 +1,4 @@
-import { StyleSheet, SafeAreaView } from "react-native";
+import { StyleSheet, SafeAreaView, LogBox } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 
 import { Provider } from "react-redux";

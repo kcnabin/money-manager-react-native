@@ -48,7 +48,8 @@ const IncomeTab = () => {
   }, [selectedMonth, incomeCategory]);
 
   if (categoryAndTotal.length < incomeCategory.length) {
-    return <AppLoading />;
+    return "";
+    // return <AppLoading />;
   }
 
   return (

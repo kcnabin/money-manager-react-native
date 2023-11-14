@@ -68,7 +68,8 @@ const MainTransactionScreen = () => {
   }, []);
 
   if (!fontsLoaded || databaseInitializing) {
-    return <AppLoading />;
+    // return <AppLoading />;
+    return "";
   }
 
   return (

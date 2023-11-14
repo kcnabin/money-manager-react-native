@@ -448,3 +448,23 @@ export const getCategoryTotalFromDb = (table, dateObject, categoryId) => {
 
   return promise;
 };
+
+// search in transaction
+export const searchInDb = (searchText, table = "income") => {
+  const promise = new Promise((resolve, reject) => {
+    const sql = `SELECT * FROM ${table} WHERE note LIKE '%${searchText}%' `;
+    database.transaction((tx) => {
+      tx.executeSql(
+        sql,
+        [],
+        (_, result) => {
+          const data = result.rows._array;
+          resolve(data);
+        },
+        (_, error) => reject(error)
+      );
+    });
+  });
+
+  return promise;
+};

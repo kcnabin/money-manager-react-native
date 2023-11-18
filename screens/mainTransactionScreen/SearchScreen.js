@@ -70,7 +70,9 @@ const SearchScreen = () => {
 
       <ScrollView>
         {searchResult.length > 0 &&
-          searchResult.map((eachTx) => <EachSearchResult search={eachTx} />)}
+          searchResult.map((eachTx) => (
+            <EachSearchResult search={eachTx} key={eachTx.id} />
+          ))}
       </ScrollView>
     </ScrollView>
   );

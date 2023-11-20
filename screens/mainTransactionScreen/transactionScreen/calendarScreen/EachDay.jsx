@@ -1,7 +1,20 @@
-import { View, Text, StyleSheet, Pressable } from "react-native"
+import { View, Text, StyleSheet, Pressable, Modal, Alert } from "react-native"
+
+import { useEffect, useState } from "react"
+import { useSelector } from "react-redux"
+
+import { fetchSingleDayTransactionsFromDb } from "../../../../util/database"
+import EachDayTransaction from '../dayScreen/EachDayTransaction'
+
 import { allColors } from "../../../../Colors"
 
 const EachDay = ({ day }) => {
+  const [modalVisible, setModalVisible] = useState(false)
+  const [selectedDate, setSelectedDate] = useState(null)
+  const [allTransactionsForADay, setAllTransactionsForADay] = useState([])
+  console.log('allTransactionsForADay :', allTransactionsForADay);
+
+  const selectedMonth = useSelector(state => state.selectedMonth)
   const { day: date, transaction } = day
 
   let totalIncome = 0
@@ -17,11 +30,38 @@ const EachDay = ({ day }) => {
       .reduce((sum, eachTx) => sum + eachTx.amount, 0);
   }
 
+  const handleDayPress = (dayOfTheMonth) => {
+    const dateObject = { ...selectedMonth, day: dayOfTheMonth }
+    setSelectedDate(() => dateObject)
+    setModalVisible(true)
+  }
+
+  useEffect(() => {
+    const getSingleDayTransactions = async () => {
+      try {
+        const singleDayIncome = await fetchSingleDayTransactionsFromDb(selectedDate, 'income')
+        const singleDayExpenses = await fetchSingleDayTransactionsFromDb(selectedDate, 'expenses')
+        setAllTransactionsForADay([...singleDayIncome, ...singleDayExpenses])
+      } catch (error) {
+        Alert.alert(`Error fetching transactions... `)
+        console.log(error)
+      }
+    }
+
+    if (modalVisible && selectedDate) {
+      getSingleDayTransactions()
+    }
+  }, [modalVisible, selectedDate])
+
   if (date !== -1) {
 
     return (
-      <Pressable style={style.dayContainer} android_ripple={{ color: allColors.lightGray }}>
-        <View>
+      <Pressable
+        onPress={() => handleDayPress(date)}
+        style={style.dayContainer}
+        android_ripple={{ color: allColors.lightGray }}
+      >
+        <View >
           <View style={style.dateContainer}>
             <Text style={style.dateText}>
               {date}
@@ -51,6 +91,24 @@ const EachDay = ({ day }) => {
           </View>
 
         </View>
+
+        <Modal
+          animationType="slide"
+          visible={modalVisible}
+          transparent={true}
+          onRequestClose={() => setModalVisible(!modalVisible)}
+        >
+          <View style={style.modalContainer}>
+            <View style={style.selectedDay}>
+              {
+                allTransactionsForADay.length > 0 && (
+                  <EachDayTransaction transactions={allTransactionsForADay} />
+                )
+              }
+            </View>
+          </View>
+        </Modal>
+
       </Pressable>
     )
   }
@@ -94,5 +152,15 @@ const style = StyleSheet.create({
   textCommon: {
     textAlign: 'right',
     fontSize: 12
+  },
+  modalContainer: {
+    height: '60%',
+    marginTop: 'auto',
+    backgroundColor: 'white',
+  },
+  selectedDay: {
+    flex: 1,
+    borderColor: allColors.lightGray,
+    borderWidth: 4
   }
 })

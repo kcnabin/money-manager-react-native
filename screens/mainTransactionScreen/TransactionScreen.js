@@ -30,7 +30,6 @@ const TransactionScreen = ({ navigation }) => {
         <TopTab.Navigator
           screenOptions={{
             tabBarLabelStyle: { fontSize: 12 },
-            // tabBarStyle: { backgroundColor: "red" },
           }}
         >
           <TopTab.Screen

@@ -12,7 +12,9 @@ const TopTab = createMaterialTopTabNavigator();
 const SummaryScreen = () => {
   return (
     <View style={style.container}>
-      <SelectedMonthAndYear />
+      <View style={style.monthAndYearContainer}>
+        <SelectedMonthAndYear />
+      </View>
 
       <View style={style.navigationContainer}>
         <TopTab.Navigator>
@@ -44,5 +46,8 @@ const style = StyleSheet.create({
   },
   navigationContainer: {
     flex: 1,
+  },
+  monthAndYearContainer: {
+    backgroundColor: "white",
   },
 });

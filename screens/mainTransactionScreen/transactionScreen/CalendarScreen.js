@@ -1,4 +1,4 @@
-import { View } from "react-native";
+import { View, StyleSheet } from "react-native";
 
 import { useSelector } from "react-redux";
 
@@ -41,7 +41,7 @@ const CalendarTab = () => {
   });
 
   return (
-    <View>
+    <View style={style.container}>
       <DailySummary totalIncome={totalIncome} totalExpenses={totalExpenses} />
       <AllDays dayArray={dayArray} />
     </View>
@@ -49,3 +49,10 @@ const CalendarTab = () => {
 };
 
 export default CalendarTab;
+
+const style = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "white",
+  },
+});

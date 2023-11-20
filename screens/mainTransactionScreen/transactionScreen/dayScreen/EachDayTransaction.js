@@ -3,6 +3,7 @@ import EachTransaction from "./EachTransaction";
 
 import { getTotalFromTransactions } from "../../../../helper/getTotalFromTransactions";
 import { mainStyle } from "../../../../mainStyle";
+import { allColors } from "../../../../Colors";
 
 const EachDayTransaction = ({ transactions }) => {
   const eachDayIncome = transactions?.filter(
@@ -44,8 +45,9 @@ const style = StyleSheet.create({
   dayContainer: {
     paddingHorizontal: 12,
     paddingVertical: 8,
-    marginBottom: 12,
     backgroundColor: "white",
+    borderBlockColor: allColors.lightGray,
+    borderBottomWidth: 2,
   },
   daySummary: {
     flexDirection: "row",

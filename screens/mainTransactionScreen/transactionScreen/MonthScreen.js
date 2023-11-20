@@ -115,6 +115,7 @@ export default MonthTab;
 const style = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "white",
   },
   monthlyRecordsContainer: {
     marginBottom: 12,

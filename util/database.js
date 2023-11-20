@@ -468,3 +468,34 @@ export const searchInDb = (searchText, table = "income") => {
 
   return promise;
 };
+
+export const fetchSingleDayTransactionsFromDb = (dateObject, table) => {
+  const promise = new Promise((resolve, reject) => {
+    const { year, month, day } = dateObject;
+    if (!year || !month || !day) {
+      return;
+    }
+
+    let date = `${year}-${month}-${day}`;
+    if (day < 10) {
+      date = `${year}-${month}-0${day}`;
+    }
+
+    const sql = `SELECT * FROM ${table} WHERE date LIKE '${date}%'`;
+    database.transaction((tx) => {
+      tx.executeSql(
+        sql,
+        [],
+        (_, result) => {
+          const data = result.rows._array;
+          resolve(data);
+        },
+        (_, error) => {
+          reject(error);
+        }
+      );
+    });
+  });
+
+  return promise;
+};

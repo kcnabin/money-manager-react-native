@@ -74,8 +74,8 @@ export default AllTransactions;
 
 const style = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: allColors.lightGray,
+    // flex: 1,
+    // backgroundColor: allColors.lightGray,
   },
   center: {
     justifyContent: "center",

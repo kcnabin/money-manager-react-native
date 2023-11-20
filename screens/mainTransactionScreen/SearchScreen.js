@@ -84,6 +84,7 @@ const style = StyleSheet.create({
   container: {
     paddingVertical: 12,
     paddingHorizontal: 16,
+    backgroundColor: "white",
   },
   inputContainer: {
     marginBottom: 16,

@@ -31,7 +31,7 @@ const App = () => {
               component={MainTransactionScreen}
               options={{
                 title: "Transactions",
-                tabBarIcon: ({ color, size }) => (
+                tabBarIcon: ({ color }) => (
                   <MaterialIcons name="grid-view" size={28} color={color} />
                 ),
               }}

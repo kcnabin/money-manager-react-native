@@ -1,6 +1,5 @@
 import { ScrollView, StyleSheet, View, Text } from "react-native";
 import EachDayTransaction from "./EachDayTransaction";
-import { allColors } from "../../../../Colors";
 
 const AllTransactions = ({ transactions }) => {
   const dayArray = [
@@ -74,8 +73,7 @@ export default AllTransactions;
 
 const style = StyleSheet.create({
   container: {
-    // flex: 1,
-    // backgroundColor: allColors.lightGray,
+    flex: 1,
   },
   center: {
     justifyContent: "center",

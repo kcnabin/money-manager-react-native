@@ -12,7 +12,6 @@ const EachDay = ({ day }) => {
   const [modalVisible, setModalVisible] = useState(false)
   const [selectedDate, setSelectedDate] = useState(null)
   const [allTransactionsForADay, setAllTransactionsForADay] = useState([])
-  console.log('allTransactionsForADay :', allTransactionsForADay);
 
   const selectedMonth = useSelector(state => state.selectedMonth)
   const { day: date, transaction } = day

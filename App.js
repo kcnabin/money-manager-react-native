@@ -44,7 +44,7 @@ const App = () => {
                 tabBarIcon: ({ color }) => (
                   <MaterialIcons
                     name="account-balance-wallet"
-                    size={24}
+                    size={28}
                     color={color}
                   />
                 ),
@@ -57,7 +57,7 @@ const App = () => {
               options={{
                 title: "More",
                 tabBarIcon: ({ color }) => (
-                  <MaterialIcons name="settings" size={24} color={color} />
+                  <MaterialIcons name="settings" size={28} color={color} />
                 ),
               }}
             />

@@ -2,8 +2,9 @@ export const allColors = {
   incomeColor: "#6495ed",
   expensesColor: "#dc143c",
   tabActive: "#b61111",
-  tabInactive: "#86909b",
-  tabBackground: "#e3e3e3",
+  tabInactive: "#262d34",
+  tabBackground: "#e9e9e9",
+  // tabBackground: "#f8f0f0f6",
 
   topTabBackground: "#eaeaeabd",
 

@@ -2,6 +2,7 @@ import { View, Text, StyleSheet, ScrollView } from "react-native";
 import IconText from "./components/IconText";
 
 const MoreScreen = () => {
+  console.log("--- more screen rendering");
   return (
     <ScrollView>
       <Text style={style.title}>Settings</Text>

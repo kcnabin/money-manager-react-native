@@ -52,7 +52,7 @@ const AddIncomeExpensesScreen = ({ route }) => {
   const [mode, setMode] = useState("date");
   const [show, setShow] = useState(false);
 
-  const [accountOrCategory, setAccountOrCategory] = useState(null);
+  const [accountOrCategory, setAccountOrCategory] = useState("account");
   const [transactionType, setTransactionType] = useState("expenses");
 
   const allAccount = useSelector((state) => state.account);
@@ -214,7 +214,6 @@ const AddIncomeExpensesScreen = ({ route }) => {
     setDate(new Date());
     setAccount("");
     setCategory("");
-    setAccountOrCategory(null);
   };
 
   const setToIncome = () => {
@@ -266,11 +265,10 @@ const AddIncomeExpensesScreen = ({ route }) => {
     const defaultStyle = {
       textAlign: "center",
       fontSize: 16,
-      fontFamily: "main",
     };
 
     if (transactionType === type) {
-      style = { ...defaultStyle, color: "white", fontFamily: "main-bold" };
+      style = { ...defaultStyle, color: "white" };
     } else {
       style = defaultStyle;
     }
@@ -318,13 +316,14 @@ const AddIncomeExpensesScreen = ({ route }) => {
         <Pressable onPress={() => setAccountOrCategory(null)}>
           <View style={mainStyle.flexRow}>
             <Text style={mainStyle.inputText}>Amount</Text>
-
-            <TextInput
-              style={mainStyle.input}
-              value={amount}
-              onChangeText={(value) => setAmount(value)}
-              inputMode="numeric"
-            />
+            <Pressable onPress={() => setAccountOrCategory(null)}>
+              <TextInput
+                style={mainStyle.input}
+                value={amount}
+                onChangeText={(value) => setAmount(value)}
+                inputMode="numeric"
+              />
+            </Pressable>
           </View>
 
           <View style={mainStyle.flexRow}>

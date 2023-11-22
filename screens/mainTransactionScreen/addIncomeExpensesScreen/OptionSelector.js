@@ -10,11 +10,39 @@ const OptionSelector = ({
   transactionType,
   selectOptions,
 }) => {
+  const navigation = useNavigation();
+
   const incomeCategory = useSelector((state) => state.incomeCategory);
   const account = useSelector((state) => state.account);
   const expensesCategory = useSelector((state) => state.expensesCategory);
 
-  const navigation = useNavigation();
+  const handleNavigation = () => {
+    if (accountOrCategory === "account") {
+      if (account.length < 1) {
+        navigation.navigate("EditOptionsForm", { optionType: "account" });
+      } else {
+        navigation.navigate("EditOptions", {
+          option: "account",
+        });
+      }
+    } else if (transactionType === "income") {
+      if (incomeCategory.length < 1) {
+        navigation.navigate("EditOptionsForm", { optionType: "income" });
+      } else {
+        navigation.navigate("EditOptions", {
+          option: "income",
+        });
+      }
+    } else {
+      if (expensesCategory.length < 1) {
+        navigation.navigate("EditOptionsForm", { optionType: "expenses" });
+      } else {
+        navigation.navigate("EditOptions", {
+          option: "expenses",
+        });
+      }
+    }
+  };
 
   return (
     <View style={style.container}>
@@ -27,19 +55,8 @@ const OptionSelector = ({
             : "Expenses Categories"}
         </Text>
 
-        <Pressable
-          onPress={() =>
-            navigation.navigate("EditOptions", {
-              option:
-                accountOrCategory === "account"
-                  ? "account"
-                  : transactionType === "income"
-                  ? "income"
-                  : "expenses",
-            })
-          }
-        >
-          <MaterialIcons name="edit" size={24} color="white" />
+        <Pressable onPress={handleNavigation}>
+          <MaterialIcons name="add" size={24} color="white" />
         </Pressable>
       </View>
 
@@ -75,7 +92,6 @@ const style = StyleSheet.create({
   },
   headerText: {
     color: "white",
-    fontFamily: "main-bold",
     fontSize: 18,
   },
 });

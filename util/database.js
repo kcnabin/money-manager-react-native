@@ -401,11 +401,14 @@ export const deleteTransactionFromDb = (id, table = "expenses") => {
   return promise;
 };
 
-export const deleteAllExpenses = () => {
+export const dropTableFromDB = (table = "income") => {
   const promise = new Promise((resolve, reject) => {
     database.transaction((tx) => {
+      const sql = `DROP TABLE ${table}`;
+      console.log("sql :", sql);
       tx.executeSql(
-        `DROP TABLE expenses`,
+        sql,
+
         [],
         (_, result) => {
           resolve(result);

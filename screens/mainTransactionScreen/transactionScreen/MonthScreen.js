@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { getMonthlyTotalFromDb } from "../../../util/database";
 
 import { allColors } from "../../../Colors";
-import AppLoading from "expo-app-loading";
 import { displaySelectedMonthAndYear } from "../../../helper/dateHelper";
 
 const MonthTab = () => {

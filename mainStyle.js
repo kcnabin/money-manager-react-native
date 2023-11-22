@@ -7,7 +7,6 @@ export const mainStyle = StyleSheet.create({
   },
   bigFont: {
     fontSize: 28,
-    fontWeight: "bold",
   },
   header: {
     padding: 12,
@@ -15,34 +14,25 @@ export const mainStyle = StyleSheet.create({
   },
   headerText: {
     fontSize: 16,
-    fontFamily: "main-bold",
   },
-  mainFont: {
-    fontFamily: "main",
-  },
-  mainFontBold: {
-    fontFamily: "main-bold",
-  },
+  mainFont: {},
+  mainFontBold: {},
   input: {
     borderBottomWidth: 1,
     borderBottomColor: allColors.gray,
     paddingBottom: 4,
     marginLeft: 16,
-    fontFamily: "main",
     fontSize: 16,
     flex: 1,
   },
   inputText: {
-    fontFamily: "main",
     fontSize: 16,
     width: 70,
   },
   font16: {
-    fontFamily: "main",
     fontSize: 16,
   },
   font20: {
-    fontFamily: "main",
     fontSize: 20,
   },
   flexRow: {

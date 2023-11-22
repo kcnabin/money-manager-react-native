@@ -7,7 +7,6 @@ import { getCategoryTotalFromDb } from "../../util/database";
 import DisplayPieChart from "./components/DisplayPieChart";
 import DisplayAllCategories from "./components/DisplayAllCategories";
 
-import AppLoading from "expo-app-loading";
 import { PieChartColors } from "../../Colors";
 
 const ExpensesTab = () => {

@@ -162,7 +162,6 @@ const style = StyleSheet.create({
   },
   inputText: {
     fontSize: 16,
-    fontFamily: "main",
   },
   saveButton: {
     marginVertical: 20,

@@ -97,6 +97,5 @@ const style = StyleSheet.create({
   },
   optionText: {
     fontSize: 16,
-    fontFamily: "main",
   },
 });

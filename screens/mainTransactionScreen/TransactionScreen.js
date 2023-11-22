@@ -1,18 +1,24 @@
-import { View, StyleSheet, Button, Pressable } from "react-native";
-import { mainStyle } from "../../mainStyle";
+import { View, StyleSheet, Pressable } from "react-native";
 
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+
 import CalendarTab from "./transactionScreen/CalendarScreen";
 import DayTab from "./transactionScreen/DayScreen";
 import MonthTab from "./transactionScreen/MonthScreen";
 
 import SelectedMonthAndYear from "../components/SelectedMonthAndYear";
+
+import { mainStyle } from "../../mainStyle";
 import { MaterialIcons } from "@expo/vector-icons";
 import CircularAddIcon from "../../components/CircularAddIcon";
 
 const TopTab = createMaterialTopTabNavigator();
 
 const TransactionScreen = ({ navigation }) => {
+  const handleNewTransaction = () => {
+    navigation.navigate("AddIncomeExpenses");
+  };
+
   return (
     <View style={mainStyle.fullArea}>
       <View style={style.headerContainer}>
@@ -52,10 +58,7 @@ const TransactionScreen = ({ navigation }) => {
         </TopTab.Navigator>
       </View>
 
-      <Pressable
-        style={style.addIconContainer}
-        onPress={() => navigation.navigate("AddIncomeExpenses")}
-      >
+      <Pressable style={style.addIconContainer} onPress={handleNewTransaction}>
         <CircularAddIcon />
       </Pressable>
     </View>

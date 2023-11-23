@@ -1,4 +1,4 @@
-import { Alert, ScrollView } from "react-native";
+import { Alert, ScrollView, View, Text } from "react-native";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 
@@ -48,8 +48,11 @@ const ExpensesTab = () => {
   }, [expensesCategory, selectedMonth]);
 
   if (categoryAndTotal.length < expensesCategory.length) {
-    return "";
-    // return <AppLoading />;
+    return (
+      <View>
+        <Text>Loading...</Text>
+      </View>
+    );
   }
 
   return (

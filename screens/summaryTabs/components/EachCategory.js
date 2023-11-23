@@ -3,7 +3,7 @@ import { allColors } from "../../../Colors";
 
 const EachCategory = ({ category, grandTotal }) => {
   if (category.total === 0) {
-    return "";
+    return;
   }
 
   return (

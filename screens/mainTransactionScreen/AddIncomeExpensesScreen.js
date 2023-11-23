@@ -6,7 +6,6 @@ import {
   Text,
   TextInput,
   StyleSheet,
-  Button,
   Pressable,
   Alert,
 } from "react-native";
@@ -30,11 +29,14 @@ import {
   updateExpenses,
 } from "../../features/expenses/expensesSlice";
 
+import { transactionConducted } from "../../features/transactionsCounter/transactionsCounterSlice";
+
 import DateTimePicker from "@react-native-community/datetimepicker";
 import OptionSelector from "./addIncomeExpensesScreen/OptionSelector";
 import DateAndTimePicker from "./addIncomeExpensesScreen/DateAndTimePicker";
 import AccountPicker from "./addIncomeExpensesScreen/AccountPicker";
 
+import MyButton from "../../components/MyButton";
 import { mainStyle } from "../../mainStyle";
 import { allColors } from "../../Colors";
 import { areMonthsEqual } from "../../helper/dateHelper";
@@ -130,6 +132,8 @@ const AddIncomeExpensesScreen = ({ route }) => {
       addNewTransaction(transactionObject);
     }
 
+    dispatch(transactionConducted());
+
     navigation.navigate("AllTransactions");
   };
 
@@ -196,6 +200,7 @@ const AddIncomeExpensesScreen = ({ route }) => {
             if (transactionType === "expenses") {
               await deleteTransactionFromDb(id, "expenses");
               dispatch(deleteExpenses({ id }));
+              dispatch(transactionConducted());
             } else {
               await deleteTransactionFromDb(id, "income");
               dispatch(deleteIncome({ id }));
@@ -247,7 +252,7 @@ const AddIncomeExpensesScreen = ({ route }) => {
       borderWidth: 1,
       borderColor: "black",
       flex: 1,
-      paddingVertical: 8,
+      paddingVertical: 12,
       paddingHorizontal: 12,
       borderRadius: 12,
     };
@@ -316,14 +321,13 @@ const AddIncomeExpensesScreen = ({ route }) => {
         <Pressable onPress={() => setAccountOrCategory(null)}>
           <View style={mainStyle.flexRow}>
             <Text style={mainStyle.inputText}>Amount</Text>
-            <Pressable onPress={() => setAccountOrCategory(null)}>
-              <TextInput
-                style={mainStyle.input}
-                value={amount}
-                onChangeText={(value) => setAmount(value)}
-                inputMode="numeric"
-              />
-            </Pressable>
+
+            <TextInput
+              style={mainStyle.input}
+              value={amount}
+              onChangeText={(value) => setAmount(value)}
+              inputMode="numeric"
+            />
           </View>
 
           <View style={mainStyle.flexRow}>
@@ -338,21 +342,19 @@ const AddIncomeExpensesScreen = ({ route }) => {
         </Pressable>
 
         <View style={style.buttonsContainer}>
-          <View style={style.buttonStyle}>
-            <Button
-              title={route.params ? "Update" : "Save"}
-              onPress={handleTransactionSave}
-            />
-          </View>
+          <MyButton
+            title={route.params ? "Update" : "Save"}
+            onPress={handleTransactionSave}
+          />
 
           {route.params && (
-            <View style={style.buttonStyle}>
-              <Button
-                title="Delete"
-                color={allColors.expensesColor}
-                onPress={() => handleDelete(route.params.transaction.id, note)}
-              />
-            </View>
+            // <View style={style.buttonStyle}>
+            <MyButton
+              title="Delete"
+              variant="secondary"
+              onPress={() => handleDelete(route.params.transaction.id, note)}
+            />
+            // </View>
           )}
         </View>
 

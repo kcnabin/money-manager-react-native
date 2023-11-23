@@ -1,4 +1,4 @@
-import { View, StyleSheet, Text, Pressable } from "react-native"
+import { View, StyleSheet, Text, Pressable, Alert } from "react-native"
 import { MaterialIcons } from '@expo/vector-icons'
 import { allColors } from "../../Colors"
 
@@ -8,6 +8,7 @@ const IconText = ({
     <Pressable
       android_ripple={{ color: allColors.lightGray }}
       style={style.mainContainer}
+      onPress={() => Alert.alert('Coming Soon')}
     >
       <View style={style.container}>
         <MaterialIcons name={icon} size={size} color={color} />
@@ -18,8 +19,6 @@ const IconText = ({
     </Pressable >
   )
 }
-
-
 
 export default IconText
 

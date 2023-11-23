@@ -1,8 +1,9 @@
-import { Alert, ScrollView, StyleSheet } from "react-native";
+import { Alert, ScrollView, StyleSheet, View, Text } from "react-native";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 
 import { getCategoryTotalFromDb } from "../../util/database";
+
 import DisplayAllCategories from "./components/DisplayAllCategories";
 import DisplayPieChart from "./components/DisplayPieChart";
 
@@ -47,8 +48,11 @@ const IncomeTab = () => {
   }, [selectedMonth, incomeCategory]);
 
   if (categoryAndTotal.length < incomeCategory.length) {
-    return "";
-    // return <AppLoading />;
+    return (
+      <View>
+        <Text>Loading...</Text>
+      </View>
+    );
   }
 
   return (

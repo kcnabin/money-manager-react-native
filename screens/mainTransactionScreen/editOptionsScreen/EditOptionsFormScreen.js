@@ -1,4 +1,4 @@
-import { TextInput, View, StyleSheet, Button, Alert } from "react-native";
+import { TextInput, View, StyleSheet, Alert } from "react-native";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import uuid from "react-native-uuid";
@@ -22,6 +22,8 @@ import {
   addIncomeCategory,
   updateIncomeCategory,
 } from "../../../features/incomeCategory/incomeCategorySlice";
+
+import MyButton from "../../../components/MyButton";
 
 const EditOptionsFormScreen = ({ route, navigation }) => {
   const { optionType } = route.params;
@@ -137,8 +139,8 @@ const EditOptionsFormScreen = ({ route, navigation }) => {
       </View>
 
       <View style={style.saveButton}>
-        <Button
-          title="Save"
+        <MyButton
+          title={edit ? "Update" : "Save"}
           onPress={edit ? handleOptionUpdate : handleOptionSave}
         />
       </View>
@@ -150,6 +152,7 @@ export default EditOptionsFormScreen;
 
 const style = StyleSheet.create({
   container: {
+    flex: 1,
     paddingVertical: 16,
     paddingHorizontal: 12,
   },
@@ -164,6 +167,7 @@ const style = StyleSheet.create({
     fontSize: 16,
   },
   saveButton: {
+    flexDirection: "row",
     marginVertical: 20,
   },
 });

@@ -1,8 +1,19 @@
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  Linking,
+  Pressable,
+} from "react-native";
+
 import IconText from "./components/IconText";
+import { allColors } from "../Colors";
 
 const MoreScreen = () => {
-  console.log("--- more screen rendering");
+  const github = "https://github.com/kcnabin";
+  const website = "https://kcnabin.github.io/";
+
   return (
     <ScrollView>
       <Text style={style.title}>Settings</Text>
@@ -27,6 +38,18 @@ const MoreScreen = () => {
           </View>
         </View>
       </ScrollView>
+
+      <View style={style.creditContainer}>
+        <Text style={style.creditText}>Designed and developed by: </Text>
+
+        <Pressable onPress={() => Linking.openURL(website)}>
+          <Text style={style.developer}>Nabin KC</Text>
+        </Pressable>
+      </View>
+
+      <Pressable onPress={() => Linking.openURL(github)}>
+        <Text style={[style.creditText, style.developer]}>{github}</Text>
+      </Pressable>
     </ScrollView>
   );
 };
@@ -37,6 +60,7 @@ const style = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "white",
+    marginBottom: 12,
   },
   flexRow: {
     flexDirection: "row",
@@ -45,7 +69,24 @@ const style = StyleSheet.create({
     fontSize: 28,
     fontWeight: "bold",
     paddingTop: 16,
-    paddingBottom: 40,
+    paddingBottom: 30,
     textAlign: "center",
+  },
+  creditContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 8,
+  },
+  creditText: {
+    fontSize: 16,
+    textAlign: "center",
+    fontWeight: "300",
+  },
+  developer: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: allColors.developer,
+    textDecorationLine: "underline",
   },
 });

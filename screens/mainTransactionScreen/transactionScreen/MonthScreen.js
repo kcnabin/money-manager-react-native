@@ -8,6 +8,7 @@ import { allColors } from "../../../Colors";
 import { displaySelectedMonthAndYear } from "../../../helper/dateHelper";
 
 const MonthTab = () => {
+  const transactionsCounter = useSelector((state) => state.transactionsCounter);
   const selectedMonth = useSelector((state) => state.selectedMonth);
   const [monthlyRecord, setMonthlyRecord] = useState([]);
 
@@ -39,7 +40,7 @@ const MonthTab = () => {
         year = year - 1;
       }
     }
-  }, [selectedMonth]);
+  }, [selectedMonth, transactionsCounter]);
 
   let totalIncome = 0;
   let totalExpenses = 0;

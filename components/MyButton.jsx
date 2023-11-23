@@ -1,7 +1,7 @@
 import { Text, StyleSheet, Pressable } from "react-native"
 import { allColors } from "../Colors"
 
-const MyButton = ({ title = 'Save', variant = 'primary', onPress }) => {
+const MyButton = ({ title, variant = 'primary', onPress }) => {
 
   return (
     <Pressable

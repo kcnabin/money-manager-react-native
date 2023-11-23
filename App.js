@@ -10,7 +10,7 @@ import Main from "./main";
 const App = () => {
   return (
     <Provider store={store}>
-      <StatusBar style="auto" />
+      <StatusBar style="dark" />
       <View style={style.appContainer}>
         <Main />
       </View>

@@ -204,6 +204,7 @@ const AddIncomeExpensesScreen = ({ route }) => {
             } else {
               await deleteTransactionFromDb(id, "income");
               dispatch(deleteIncome({ id }));
+              dispatch(transactionConducted());
             }
 
             navigation.goBack();
@@ -283,7 +284,7 @@ const AddIncomeExpensesScreen = ({ route }) => {
 
   return (
     <View style={[style.container]}>
-      <View>
+      <View style={style.transactionSelector}>
         <View style={mainStyle.flexRow}>
           <Pressable
             style={getTransactionCategoryStyle("income")}
@@ -301,6 +302,17 @@ const AddIncomeExpensesScreen = ({ route }) => {
         </View>
 
         <DateAndTimePicker date={date} setShow={setShow} setMode={setMode} />
+        <View>
+          {show && (
+            <DateTimePicker
+              testID="dateTimePicker"
+              value={date}
+              mode={mode}
+              is24Hour={true}
+              onChange={onDateChange}
+            />
+          )}
+        </View>
 
         <AccountPicker
           pickAccount={() => setAccountOrCategory("account")}
@@ -311,35 +323,33 @@ const AddIncomeExpensesScreen = ({ route }) => {
           <View style={mainStyle.flexRow}>
             <Text style={mainStyle.inputText}>Category</Text>
             <View style={mainStyle.input}>
-              <View style={mainStyle.flexRow}>
-                <Text style={mainStyle.font16}>{category?.value}</Text>
-              </View>
+              {/* <View style={mainStyle.flexRow}> */}
+              <Text style={mainStyle.font16}>{category?.value}</Text>
+              {/* </View> */}
             </View>
           </View>
         </Pressable>
 
-        <Pressable onPress={() => setAccountOrCategory(null)}>
-          <View style={mainStyle.flexRow}>
-            <Text style={mainStyle.inputText}>Amount</Text>
+        <View style={mainStyle.flexRow}>
+          <Text style={mainStyle.inputText}>Amount</Text>
 
-            <TextInput
-              style={mainStyle.input}
-              value={amount}
-              onChangeText={(value) => setAmount(value)}
-              inputMode="numeric"
-            />
-          </View>
+          <TextInput
+            style={mainStyle.input}
+            value={amount}
+            onChangeText={(value) => setAmount(value)}
+            inputMode="numeric"
+          />
+        </View>
 
-          <View style={mainStyle.flexRow}>
-            <Text style={mainStyle.inputText}>Note</Text>
-            <TextInput
-              style={mainStyle.input}
-              value={note}
-              onChangeText={(text) => setNote(text)}
-              inputMode="text"
-            />
-          </View>
-        </Pressable>
+        <View style={mainStyle.flexRow}>
+          <Text style={mainStyle.inputText}>Note</Text>
+          <TextInput
+            style={mainStyle.input}
+            value={note}
+            onChangeText={(text) => setNote(text)}
+            inputMode="text"
+          />
+        </View>
 
         <View style={style.buttonsContainer}>
           <MyButton
@@ -357,26 +367,16 @@ const AddIncomeExpensesScreen = ({ route }) => {
             // </View>
           )}
         </View>
-
-        <View>
-          {show && (
-            <DateTimePicker
-              testID="dateTimePicker"
-              value={date}
-              mode={mode}
-              is24Hour={true}
-              onChange={onDateChange}
-            />
-          )}
-        </View>
       </View>
 
       {accountOrCategory && (
-        <OptionSelector
-          accountOrCategory={accountOrCategory}
-          transactionType={transactionType}
-          selectOptions={handleOptionSelection}
-        />
+        <View style={style.optionSelector}>
+          <OptionSelector
+            accountOrCategory={accountOrCategory}
+            transactionType={transactionType}
+            selectOptions={handleOptionSelection}
+          />
+        </View>
       )}
     </View>
   );
@@ -388,10 +388,13 @@ const style = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
+    backgroundColor: "white",
+    borderTopColor: allColors.lightGray,
+    borderTopWidth: 1,
   },
   buttonsContainer: {
     flexDirection: "row",
-    marginVertical: 16,
+    marginTop: 12,
     gap: 12,
   },
   buttonStyle: {

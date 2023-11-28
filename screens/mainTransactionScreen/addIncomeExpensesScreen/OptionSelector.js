@@ -85,13 +85,14 @@ const style = StyleSheet.create({
   optionHeader: {
     backgroundColor: "black",
     paddingHorizontal: 16,
-    paddingVertical: 8,
+    paddingVertical: 12,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
+    borderRadius: 6,
   },
   headerText: {
     color: "white",
-    fontSize: 18,
+    fontSize: 20,
   },
 });

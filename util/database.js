@@ -502,3 +502,38 @@ export const fetchSingleDayTransactionsFromDb = (dateObject, table) => {
 
   return promise;
 };
+
+export const fetchCategoryTransactionsFromDb = (
+  table,
+  categoryId,
+  dateObject
+) => {
+  const { year, month, day } = dateObject;
+  if (!year || !month || !table || !categoryId) {
+    return;
+  }
+
+  let date = `${year}-${month}-`;
+  if (day < 10) {
+    date = `${year}-${month}-0${day}`;
+  }
+
+  const promise = new Promise((resolve, reject) => {
+    const sql = `SELECT * FROM ${table} WHERE category = '${categoryId}' AND date LIKE '${date}%' `;
+    database.transaction((tx) => {
+      tx.executeSql(
+        sql,
+        [],
+        (_, result) => {
+          const data = result.rows._array;
+          resolve(data);
+        },
+        (_, error) => {
+          reject(error);
+        }
+      );
+    });
+  });
+
+  return promise;
+};

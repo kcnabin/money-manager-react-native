@@ -24,10 +24,12 @@ export const mainStyle = StyleSheet.create({
     marginLeft: 16,
     fontSize: 16,
     flex: 1,
+    flexDirection: "row",
   },
   inputText: {
     fontSize: 16,
     width: 70,
+    marginVertical: 8,
   },
   font16: {
     fontSize: 16,

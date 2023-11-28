@@ -24,6 +24,7 @@ import {
 } from "../../../features/incomeCategory/incomeCategorySlice";
 
 import MyButton from "../../../components/MyButton";
+import { allColors } from "../../../Colors";
 
 const EditOptionsFormScreen = ({ route, navigation }) => {
   const { optionType } = route.params;
@@ -125,13 +126,19 @@ const EditOptionsFormScreen = ({ route, navigation }) => {
     navigation.pop();
   };
 
+  const placeholder = `Add new ${optionType} like "${
+    optionType === "account"
+      ? "Cash or Mobile Banking"
+      : optionType === "expenses"
+      ? "Rent"
+      : "Salary"
+  }"`;
+
   return (
     <View style={style.container}>
       <View style={[style.input]}>
         <TextInput
-          placeholder={
-            edit ? "Edit Options Here" : `Add new ${optionType} category`
-          }
+          placeholder={edit ? "Edit Options Here" : placeholder}
           style={style.inputText}
           value={text}
           onChangeText={(value) => setText(value)}
@@ -155,6 +162,9 @@ const style = StyleSheet.create({
     flex: 1,
     paddingVertical: 16,
     paddingHorizontal: 12,
+    backgroundColor: "white",
+    borderTopColor: allColors.lightGray,
+    borderTopWidth: 1,
   },
   input: {
     borderColor: "black",
@@ -165,6 +175,7 @@ const style = StyleSheet.create({
   },
   inputText: {
     fontSize: 16,
+    paddingVertical: 8,
   },
   saveButton: {
     flexDirection: "row",

@@ -3,7 +3,7 @@ export const allColors = {
   expensesColor: "#dc143c",
   tabActive: "#b61111",
   tabInactive: "#262d34",
-  tabBackground: "#e9e9e9",
+  tabBackground: "#f5f5f5",
   // tabBackground: "#f8f0f0f6",
 
   topTabBackground: "#eaeaeabd",

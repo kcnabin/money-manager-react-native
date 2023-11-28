@@ -7,9 +7,9 @@ const AccountPicker = ({ pickAccount, account }) => {
       <View style={mainStyle.flexRow}>
         <Text style={mainStyle.inputText}>Account</Text>
         <View style={mainStyle.input}>
-          <View style={mainStyle.flexRow}>
-            <Text style={mainStyle.font16}>{account?.value}</Text>
-          </View>
+          {/* <View style={mainStyle.flexRow}> */}
+          <Text style={mainStyle.font16}>{account?.value}</Text>
+          {/* </View> */}
         </View>
       </View>
     </Pressable>

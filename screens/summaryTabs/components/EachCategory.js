@@ -1,13 +1,28 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Pressable } from "react-native";
 import { allColors } from "../../../Colors";
+import { useNavigation } from "@react-navigation/core";
 
 const EachCategory = ({ category, grandTotal }) => {
+  const navigation = useNavigation();
+
+  const displayCategorySummary = () => {
+    navigation.navigate("CategorySummary", {
+      table: category.table,
+      id: category.categoryId,
+      name: category.name,
+    });
+  };
+
   if (category.total === 0) {
     return;
   }
 
   return (
-    <View style={style.container}>
+    <Pressable
+      style={style.container}
+      android_ripple={{ color: allColors.lightGray }}
+      onPress={displayCategorySummary}
+    >
       <View style={style.percentContainer}>
         <View
           style={{
@@ -28,7 +43,7 @@ const EachCategory = ({ category, grandTotal }) => {
       <View style={style.valueContainer}>
         <Text style={style.valueText}>{category.total.toLocaleString()}</Text>
       </View>
-    </View>
+    </Pressable>
   );
 };
 

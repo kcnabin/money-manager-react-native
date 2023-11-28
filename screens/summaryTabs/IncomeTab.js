@@ -12,6 +12,7 @@ import { PieChartColors } from "../../Colors";
 const IncomeTab = () => {
   const incomeCategory = useSelector((state) => state.incomeCategory);
   const selectedMonth = useSelector((state) => state.selectedMonth);
+  const transactionsCounter = useSelector((state) => state.transactionsCounter);
 
   const [categoryAndTotal, setCategoryAndTotal] = useState([]);
 
@@ -34,6 +35,8 @@ const IncomeTab = () => {
             name: category.value,
             total,
             color: PieChartColors[i],
+            categoryId: category.id,
+            table: "income",
           };
 
           setCategoryAndTotal((prevValue) => [...prevValue, data]);
@@ -45,7 +48,7 @@ const IncomeTab = () => {
     };
 
     getCatTotal();
-  }, [selectedMonth, incomeCategory]);
+  }, [selectedMonth, incomeCategory, transactionsCounter]);
 
   if (categoryAndTotal.length < incomeCategory.length) {
     return (

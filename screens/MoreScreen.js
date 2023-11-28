@@ -15,7 +15,7 @@ const MoreScreen = () => {
   const website = "https://kcnabin.github.io/";
 
   return (
-    <ScrollView>
+    <ScrollView style={style.mainContainer}>
       <Text style={style.title}>Settings</Text>
       <ScrollView style={style.container}>
         <View>
@@ -57,6 +57,10 @@ const MoreScreen = () => {
 export default MoreScreen;
 
 const style = StyleSheet.create({
+  mainContainer: {
+    flex: 1,
+    backgroundColor: "white",
+  },
   container: {
     flex: 1,
     backgroundColor: "white",

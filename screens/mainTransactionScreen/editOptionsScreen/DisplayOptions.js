@@ -2,6 +2,7 @@ import { ScrollView, StyleSheet, Button, View, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import EachOption from "./EachOption";
 import CircularAddIcon from "../../../components/CircularAddIcon";
+import { allColors } from "../../../Colors";
 
 const DisplayOptions = ({ options, optionType }) => {
   const navigation = useNavigation();
@@ -29,6 +30,9 @@ export default DisplayOptions;
 const style = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "white",
+    borderTopColor: allColors.lightGray,
+    borderTopWidth: 1,
   },
   options: {
     paddingVertical: 12,

@@ -10,7 +10,11 @@ const Stack = createStackNavigator();
 
 const MainTransactionScreen = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerBackTitleVisible: false,
+      }}
+    >
       <Stack.Screen
         name="AllTransactions"
         component={TransactionScreen}

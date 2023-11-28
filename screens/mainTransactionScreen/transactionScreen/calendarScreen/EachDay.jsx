@@ -7,6 +7,7 @@ import { fetchSingleDayTransactionsFromDb } from "../../../../util/database"
 import EachDayTransaction from '../dayScreen/EachDayTransaction'
 
 import { allColors } from "../../../../Colors"
+import MyButton from "../../../../components/MyButton"
 
 const EachDay = ({ day }) => {
   const [modalVisible, setModalVisible] = useState(false)
@@ -104,7 +105,19 @@ const EachDay = ({ day }) => {
                   <EachDayTransaction transactions={allTransactionsForADay} />
                 )
               }
+
+              {allTransactionsForADay.length === 0 && (
+                <Text style={style.noTransactionInfo}>
+                  {`No Transaction for ${selectedMonth.year}-${selectedMonth.month}-${date}`}
+                </Text>
+              )}
+
+              <View style={style.closeButtomContainer}>
+                <MyButton title="Close" onPress={() => setModalVisible(false)} />
+              </View>
             </View>
+
+
           </View>
         </Modal>
 
@@ -159,7 +172,19 @@ const style = StyleSheet.create({
   },
   selectedDay: {
     flex: 1,
-    borderColor: allColors.lightGray,
-    borderWidth: 4
+    borderTopColor: allColors.lightGray,
+    borderTopWidth: 4,
+    justifyContent: 'space-between'
+  },
+  closeButtomContainer: {
+    flexDirection: 'row',
+    marginTop: 20,
+    marginBottom: 30,
+    paddingHorizontal: 16
+  },
+  noTransactionInfo: {
+    padding: 12,
+    fontSize: 18,
+    textAlign: 'center'
   }
 })

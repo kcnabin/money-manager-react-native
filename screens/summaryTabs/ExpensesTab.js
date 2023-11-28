@@ -12,6 +12,7 @@ import { PieChartColors } from "../../Colors";
 const ExpensesTab = () => {
   const expensesCategory = useSelector((state) => state.expensesCategory);
   const selectedMonth = useSelector((state) => state.selectedMonth);
+  const transactionsCounter = useSelector((state) => state.transactionsCounter);
 
   const [categoryAndTotal, setCategoryAndTotal] = useState([]);
 
@@ -34,6 +35,8 @@ const ExpensesTab = () => {
             name: category.value,
             total,
             color: PieChartColors[i],
+            categoryId: category.id,
+            table: "expenses",
           };
 
           setCategoryAndTotal((preValue) => [...preValue, data]);
@@ -45,7 +48,7 @@ const ExpensesTab = () => {
     };
 
     getCatTotal();
-  }, [expensesCategory, selectedMonth]);
+  }, [expensesCategory, selectedMonth, transactionsCounter]);
 
   if (categoryAndTotal.length < expensesCategory.length) {
     return (

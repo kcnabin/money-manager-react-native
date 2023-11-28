@@ -7,7 +7,7 @@ import { initAccountFromDb } from "./features/account/accountSlice";
 import { initExpensesCategoryFromDb } from "./features/expensesCategory/expensesCategorySlice";
 import { initIncomeCategoryFromDb } from "./features/incomeCategory/incomeCategorySlice";
 
-import SummaryScreen from "./screens/SummaryScreen";
+import MainSummaryScreen from "./screens/MainSummaryScreen";
 import MoreScreen from "./screens/MoreScreen";
 import MainTransactionScreen from "./screens/MainTransactionScreen";
 
@@ -89,8 +89,8 @@ const Main = () => {
           }}
         />
         <Tab.Screen
-          name="SummaryScreen"
-          component={SummaryScreen}
+          name="MainSummaryScreen"
+          component={MainSummaryScreen}
           options={{
             title: "Summary",
             tabBarIcon: ({ color }) => (

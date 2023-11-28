@@ -31,3 +31,7 @@ const shortMonths = [
 export const displaySelectedMonthAndYear = (monthObject) => {
   return `${shortMonths[monthObject.month]} ${monthObject.year}`;
 };
+
+export const getShortMonthName = (monthObject) => {
+  return `${shortMonths[monthObject.month]}`;
+};

@@ -1,11 +1,9 @@
-import { Alert, View } from "react-native";
+import { Alert, View, StyleSheet } from "react-native";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import DailySummary from "./dayScreen/DailySummary";
+import IncomeExpensesSummary from "./monthScreen/IncomeExpensesSummary";
 import AllTransactions from "./dayScreen/AllTransactions";
-
-import { mainStyle } from "../../../mainStyle";
 
 import {
   getAllMonthlyTransactionsFromDb,
@@ -67,8 +65,8 @@ const DayTab = () => {
   }, [selectedMonth]);
 
   return (
-    <View style={mainStyle.fullArea}>
-      <DailySummary totalIncome={totalIncome} totalExpenses={totalExpenses} />
+    <View style={style.container}>
+      <IncomeExpensesSummary income={totalIncome} expenses={totalExpenses} />
 
       <AllTransactions transactions={[...currentExpenses, ...currentIncome]} />
     </View>
@@ -76,3 +74,10 @@ const DayTab = () => {
 };
 
 export default DayTab;
+
+const style = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "white",
+  },
+});

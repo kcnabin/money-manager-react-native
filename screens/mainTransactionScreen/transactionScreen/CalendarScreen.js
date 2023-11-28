@@ -3,7 +3,7 @@ import { View, StyleSheet } from "react-native";
 import { useSelector } from "react-redux";
 
 import AllDays from "./calendarScreen/AllDays";
-import DailySummary from "./dayScreen/DailySummary";
+import IncomeExpensesSummary from "./monthScreen/IncomeExpensesSummary";
 
 const CalendarTab = () => {
   const monthlyIncome = useSelector((state) => state.income);
@@ -42,7 +42,7 @@ const CalendarTab = () => {
 
   return (
     <View style={style.container}>
-      <DailySummary totalIncome={totalIncome} totalExpenses={totalExpenses} />
+      <IncomeExpensesSummary income={totalIncome} expenses={totalExpenses} />
       <AllDays dayArray={dayArray} />
     </View>
   );

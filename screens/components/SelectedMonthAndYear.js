@@ -1,5 +1,7 @@
-import { Pressable, View, Text, StyleSheet } from "react-native";
+import { Pressable, View, Text, StyleSheet, Modal } from "react-native";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
 import {
   decreaseOneMonth,
   increaseOneMonth,
@@ -7,11 +9,12 @@ import {
 
 import { displaySelectedMonthAndYear } from "../../helper/dateHelper";
 import { MaterialIcons } from "@expo/vector-icons";
+import MonthSelectorModal from "./MonthSelectorModal";
 
 const SelectedMonthAndYear = () => {
   const dispatch = useDispatch();
-
   const selectedMonth = useSelector((state) => state.selectedMonth);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const handleMonthDecrement = () => {
     dispatch(decreaseOneMonth());
@@ -21,13 +24,17 @@ const SelectedMonthAndYear = () => {
     dispatch(increaseOneMonth());
   };
 
+  const closeModal = () => {
+    setModalVisible(!modalVisible);
+  };
+
   return (
     <View style={style.container}>
       <Pressable style={style.pressableIcon} onPress={handleMonthDecrement}>
         <MaterialIcons name="chevron-left" size={24} color="black" />
       </Pressable>
 
-      <Pressable>
+      <Pressable onPress={() => setModalVisible(true)}>
         <Text style={style.selectedMonth}>
           {displaySelectedMonthAndYear(selectedMonth)}
         </Text>
@@ -36,6 +43,8 @@ const SelectedMonthAndYear = () => {
       <Pressable style={style.pressableIcon} onPress={handleMonthIncrement}>
         <MaterialIcons name="chevron-right" size={24} color="black" />
       </Pressable>
+
+      <MonthSelectorModal modalVisible={modalVisible} closeModal={closeModal} />
     </View>
   );
 };

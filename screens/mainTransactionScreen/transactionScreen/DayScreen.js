@@ -39,7 +39,7 @@ const DayTab = () => {
     };
 
     getTotal();
-  }, [currentIncome, currentExpenses]);
+  }, [currentIncome, currentExpenses, selectedMonth]);
 
   useEffect(() => {
     const getIncomeExpenses = async () => {
@@ -54,6 +54,7 @@ const DayTab = () => {
         );
 
         dispatch(initExpensesFromDb(expenses));
+
         dispatch(initIncomeFromDb(income));
       } catch (error) {
         console.log(error);

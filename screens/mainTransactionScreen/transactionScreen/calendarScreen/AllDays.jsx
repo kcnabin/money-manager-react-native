@@ -5,12 +5,20 @@ import CalendarData from "./CalendarData";
 const AllDays = ({ dayArray }) => {
   const selectedMonth = useSelector(state => state.selectedMonth)
 
+  let masterArray = []
+
+  const totalDays = new Date(
+    `${selectedMonth.year}`,
+    `${selectedMonth.month}`,
+    0
+  ).getDate();
+
+  const actualMonthlyData = dayArray.slice(0, totalDays)
+
   const daysToInsertBefore =
     new Date(`${selectedMonth.year}-${selectedMonth.month}-1`).getDay();
 
-  const daysToInsertAfter = 42 - daysToInsertBefore - dayArray.length
-
-  let masterArray = []
+  const daysToInsertAfter = 42 - daysToInsertBefore - totalDays
 
   for (let i = 0; i < daysToInsertBefore; i++) {
     masterArray.push({
@@ -18,7 +26,7 @@ const AllDays = ({ dayArray }) => {
     })
   }
 
-  dayArray.forEach((transaction, index) => masterArray.push({
+  actualMonthlyData.forEach((transaction, index) => masterArray.push({
     transaction,
     day: index + 1
   }))
@@ -27,6 +35,10 @@ const AllDays = ({ dayArray }) => {
     masterArray.push({
       day: -1
     })
+  }
+
+  if (masterArray.length === 0) {
+    return ''
   }
 
   return (

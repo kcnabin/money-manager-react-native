@@ -15,9 +15,7 @@ import EachSearchResult from "./searchScreen/EachSearchResult";
 const SearchScreen = () => {
   const [search, setSearch] = useState("");
   const [isSearching, setIsSearching] = useState(false);
-  const [searchMessage, setSearchMessage] = useState(
-    "Search for your transaction..."
-  );
+  const [searchMessage, setSearchMessage] = useState("");
 
   const [searchResult, setSearchResult] = useState([]);
 
@@ -57,6 +55,7 @@ const SearchScreen = () => {
           style={style.input}
           placeholder="Search for your transactions"
           onChangeText={(text) => setSearch(text)}
+          inputMode="search"
         />
       </View>
 

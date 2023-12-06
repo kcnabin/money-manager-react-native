@@ -69,6 +69,7 @@ const style = StyleSheet.create({
   },
   noteText: {
     fontSize: 16,
+    marginBottom: 4,
   },
   amount: {
     flex: 1,

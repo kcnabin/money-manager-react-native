@@ -160,23 +160,15 @@ const AddIncomeExpensesScreen = ({ route }) => {
     try {
       if (transactionType === "income") {
         await updateTransactionInDb(transactionObject, "income");
-        if (areMonthsEqual(selectedMonth, transactionMonth)) {
-          dispatch(
-            updateIncome({
-              id: route.params.transaction.id,
-              updatedObject: transactionObject,
-            })
-          );
+        if (!areMonthsEqual(selectedMonth, transactionMonth)) {
+          dispatch(deleteIncome({ id: transactionObject.id }));
+          dispatch(transactionConducted());
         }
       } else if (transactionType === "expenses") {
         await updateTransactionInDb(transactionObject, "expenses");
-        if (areMonthsEqual(selectedMonth, transactionMonth)) {
-          dispatch(
-            updateExpenses({
-              id: route.params.transaction.id,
-              updatedObject: transactionObject,
-            })
-          );
+        if (!areMonthsEqual(selectedMonth, transactionMonth)) {
+          dispatch(deleteExpenses({ id: transactionObject.id }));
+          dispatch(transactionConducted());
         }
       }
     } catch (error) {

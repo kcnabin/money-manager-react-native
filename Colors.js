@@ -16,33 +16,32 @@ export const allColors = {
 };
 
 export const PieChartColors = [
-  "#6495ed",
-  "#0000ff",
-  "#ffd700",
-  "#8a2be2",
   "#a52a2a",
+
+  "#a9a9a9",
+
   "#5f9ea0",
-  "#d2691e",
-  "#ff7f50",
-  "#6495ed",
+
   "#00bfff",
-  "#00ffff",
-  "#ffe4c4",
-  "#0000ff",
+
   "#8a2be2",
-  "#a52a2a",
-  "#5f9ea0",
-  "#7fff00",
-  "#d2691e",
+
+  "#6495ed",
   "#6495ed",
   "#dc143c",
   "#00ffff",
   "#00008b",
   "#008b8b",
   "#b8860b",
-  "#a9a9a9",
+
   "#8b008b",
   "#556b2f",
+  "#6495ed",
+  "#0000ff",
+  "#ffd700",
+  "#0000ff",
+
+  "#a52a2a",
   "#ff8c00",
   "#8b0000",
   "#e9967a",
@@ -51,7 +50,7 @@ export const PieChartColors = [
   "#2f4f4f",
   "#9400d3",
   "#ff1493",
-  "#1e90ff",
+
   "#ff00ff",
   "#ffd700",
   "#daa520",

@@ -142,6 +142,8 @@ const EditOptionsFormScreen = ({ route, navigation }) => {
           style={style.inputText}
           value={text}
           onChangeText={(value) => setText(value)}
+          inputMode="search"
+          keyboardType="default"
         />
       </View>
 

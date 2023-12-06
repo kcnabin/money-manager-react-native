@@ -24,8 +24,11 @@ const style = StyleSheet.create({
     borderColor: "#cccccc",
     flex: 1,
     flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
   },
   optionText: {
     fontSize: 16,
+    textAlign: "center",
   },
 });

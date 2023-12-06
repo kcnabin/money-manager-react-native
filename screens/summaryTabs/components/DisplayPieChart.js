@@ -2,6 +2,8 @@ import { PieChart } from "react-native-chart-kit";
 import { Dimensions } from "react-native";
 
 const DisplayPieChart = ({ data }) => {
+  const sortedData = data.sort((a, b) => b.total - a.total);
+
   const chartConfig = {
     backgroundColor: "#e26a00",
     backgroundGradientFrom: "#fb8c00",
@@ -12,7 +14,7 @@ const DisplayPieChart = ({ data }) => {
 
   return (
     <PieChart
-      data={data}
+      data={sortedData}
       width={Dimensions.get("window").width * 2}
       height={250}
       chartConfig={chartConfig}

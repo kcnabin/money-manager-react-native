@@ -1,5 +1,14 @@
-import { Modal, View, Text, Pressable, StyleSheet } from "react-native";
+import {
+  Modal,
+  View,
+  Text,
+  Pressable,
+  StyleSheet,
+  Platform,
+} from "react-native";
 import { useState } from "react";
+
+import Constants from "expo-constants";
 
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedMonth } from "../../features/selectedMonth/selectedMonthSlice";
@@ -8,6 +17,8 @@ import DisplayMonths from "./DisplayMonths";
 
 import Icon from "../../components/Icon";
 import MyButton from "../../components/MyButton";
+
+const sBarHeight = Platform.OS === "ios" ? Constants.statusBarHeight : 0;
 
 const MonthSelectorModal = ({ modalVisible, closeModal }) => {
   const dispatch = useDispatch();
@@ -145,5 +156,6 @@ const style = StyleSheet.create({
   },
   modal: {
     marginHorizontal: 12,
+    marginTop: sBarHeight,
   },
 });

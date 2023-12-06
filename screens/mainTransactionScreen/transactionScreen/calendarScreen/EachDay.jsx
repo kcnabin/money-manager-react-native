@@ -72,19 +72,19 @@ const EachDay = ({ day }) => {
 
             <View >
               <Text style={[style.incomeText, style.textCommon]}>
-                {totalIncome === 0 ? '' : totalIncome}
+                {totalIncome === 0 ? '' : totalIncome.toLocaleString()}
               </Text>
             </View>
 
             <View>
               <Text style={[style.expensesText, style.textCommon]}>
-                {totalExpenses === 0 ? '' : totalExpenses}
+                {totalExpenses === 0 ? '' : totalExpenses.toLocaleString()}
               </Text>
             </View>
 
             <View>
               <Text style={[style.differenceText, style.textCommon]}>
-                {(totalExpenses === 0 || totalIncome === 0) ? '' : totalIncome - totalExpenses}
+                {(totalExpenses === 0 || totalIncome === 0) ? '' : (totalIncome - totalExpenses).toLocaleString()}
               </Text>
             </View>
 

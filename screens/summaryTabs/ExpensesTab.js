@@ -1,4 +1,4 @@
-import { Alert, ScrollView, View, Text } from "react-native";
+import { Alert, ScrollView, View, Text, StyleSheet } from "react-native";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 
@@ -59,7 +59,7 @@ const ExpensesTab = () => {
   }
 
   return (
-    <ScrollView>
+    <ScrollView style={style.container}>
       <DisplayPieChart data={categoryAndTotal} />
       <DisplayAllCategories
         data={categoryAndTotal}
@@ -70,3 +70,9 @@ const ExpensesTab = () => {
 };
 
 export default ExpensesTab;
+
+const style = StyleSheet.create({
+  container: {
+    backgroundColor: "white",
+  },
+});

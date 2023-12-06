@@ -3,10 +3,10 @@ Money Manager - A React Native App by Nabin
 Developed using: React Native, Redux Toolkit and SQLite
 
 Day Screen with 'Selected Month' transactions
-![Alt text](https://raw.githubusercontent.com/kcnabin/money-manager-react-native/main/assets/screenshots/day-tab.png "Day Screen with 'Selected Month' transactions")
+![Alt text](/assets/screenshots/day-tab.png "Day Screen with 'Selected Month' transactions")
 
 Selected Category Line Chart
-![Alt text](https://raw.githubusercontent.com/kcnabin/money-manager-react-native/main/assets/screenshots/category-line-chart.png "Selected Category Line Chart")
+<img src="https://raw.githubusercontent.com/kcnabin/money-manager-react-native/main/assets/screenshots/category-line-chart.png" alt="Alt text" title="Selected Category Line Chart">
 
 Expenses Summary Pie Chart
 ![Alt text](https://raw.githubusercontent.com/kcnabin/money-manager-react-native/main/assets/screenshots/expenses-summary-pie-chart.png "Expenses Summary Pie Chart")

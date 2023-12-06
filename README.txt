@@ -12,10 +12,10 @@ Expenses Summary Pie Chart
 ![Alt text](https://raw.githubusercontent.com/kcnabin/money-manager-react-native/main/assets/screenshots/expenses-summary-pie-chart.png "Expenses Summary Pie Chart")
 
 Form for adding new transaction
-![Alt text](https://raw.githubusercontent.com/kcnabin/money-manager-react-native/main/assets/screenshots/add-transaction-form.png "Form for adding new transaction")
+![Form for adding new transaction](https://raw.githubusercontent.com/kcnabin/money-manager-react-native/main/assets/screenshots/add-transaction-form.png "Form for adding new transaction")
 
 Date Selector
-![Alt text](https://raw.githubusercontent.com/kcnabin/money-manager-react-native/main/assets/screenshots/native-date-selector.png "Date Selector")
+![Alt text](https://raw.githubusercontent.com/kcnabin/money-manager-react-native/main/assets/screenshots/native-date-selector.png?raw=true "Date Selector")
 
 Monthly Summary
 ![Alt text](https://raw.githubusercontent.com/kcnabin/money-manager-react-native/main/assets/screenshots/month-tab.png "Monthly Summary")
